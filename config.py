@@ -1,37 +1,39 @@
-# when True robot should move
-walk_running = True
+# Variables
+def init():
+    # when True robot should move
+    global walk_running
+    walk_running = True
 
-# Automatic means motors should be running continuously
-# When False, encoder should be read and tracker should move only with certain number of rotation
-walk_mode_automatic = True
+    # Automatic means motors should be running continuously
+    # When False, encoder should be read and tracker should move only with certain number of rotation
+    global walk_mode_automatic
+    walk_mode_automatic = True
 
-# Robot speed
-# If negative, robot should go to the back
-walk_speed = 100
+    # Speed of left tracker
+    global walk_speed_left
+    walk_speed_left = 1.0
+    # Speed of right tracker
+    global  walk_speed_right
+    walk_speed_right = 1.0
 
-# Speed of left tracker
-walk_speed_left = 100
-# Speed of right tracker
-walk_speed_right = 100
+    # When True line following method should be used to guide robot movement
+    global  follow_the_line
+    follow_the_line = True
 
-# represent the ratio between left and right tracker speed
-# -90 is full left, 0 is straight, 90 is full right
-walk_angle = 0
+    # Value indicate which obstacle is recognized. Usually set by RFID sensor
+    # 1 - Simple Labyrinth
+    # 2 - Complex Labyrinth
+    # 3 - Ninepins (birilli)
+    # 4 - Trapeze
+    # 5 - Chessboard
+    # 6 - Wreckage (macerie)
+    # 7 - Stairs
+    # 8 - Drone
+    global obstacle_number
+    obstacle_number = 0
 
-# When True line following method should be used to guide robot movement
-follow_the_line = True
 
-# Value indicate which obstacle is recognized. Usually set by RFID sensor
-# 1 - Simple Labyrinth
-# 2 - Complex Labyrinth
-# 3 - Ninepins (birilli)
-# 4 - Trapeze
-# 5 - Chessboard
-# 6 - Wreckage (macerie)
-# 7 - Stairs
-# 8 - Drone
-obstacle_number = 0
-
+# * * * * * * * * * * * *  CONSTANTS * * * * * * * * * * * * * * * *
 # PIN configuration - GPIO number (not PIN)
 # Motor1 - left
 left_encoder = 17

@@ -3,6 +3,7 @@ import time
 import SimpleMFRC522
 import config
 
+
 class RFIDReader:
     def __init__(self):
         self._running = True
@@ -20,5 +21,4 @@ class RFIDReader:
                     config.obstacle_number = rfid_id
                     #time.sleep(0.2)
         finally:
-            GPIO.setmode(GPIO.BOARD)
             GPIO.cleanup()
