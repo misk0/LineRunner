@@ -11,10 +11,10 @@ def init():
 
     # Speed of left tracker
     global walk_speed_left
-    walk_speed_left = 1.0
+    walk_speed_left = 0
     # Speed of right tracker
-    global  walk_speed_right
-    walk_speed_right = 1.0
+    global walk_speed_right
+    walk_speed_right = 0
 
     # When True line following method should be used to guide robot movement
     global  follow_the_line
