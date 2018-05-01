@@ -53,3 +53,15 @@ rfid_rst = 22
 rfid_sck = 23
 rfid_sda = 24
 
+# Ultrasonic sensors
+ultrasonic_pin1 = 29
+ultrasonic_pin2 = 31
+ultrasonic_pin3 = 32
+ultrasonic_trigger_pin = 40
+
+# Line follow sensors
+line_follow_pin1 = 33
+line_follow_pin2 = 35
+line_follow_pin3 = 26
+line_follow_pin4 = 37
+line_follow_pin5 = 38

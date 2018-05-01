@@ -1,46 +1,49 @@
 import RPi.GPIO as GPIO
 import time
-GPIO.setmode(GPIO.BCM)
+import config
 
-TRIG = 23
-ECHO = 24
-ECHO2 = 5
+GPIO.setmode(GPIO.BOARD)
 
 
 def measure_distance(sensor_id):
-    GPIO.output(TRIG, True)
+    GPIO.output(config.ultrasonic_trigger_pin, True)
     time.sleep(0.00001)
-    GPIO.output(TRIG, False)
+    GPIO.output(config.ultrasonic_trigger_pin, False)
 
-    while GPIO.input(ECHO2) == 0:
-        pulse_start = time.time()
+    complex_distance = 0
+    retries = 0
+    for i in range(3):
+        while GPIO.input(sensor_id) == 0:
+            pulse_start = time.time()
 
-    while GPIO.input(ECHO2) == 1:
-        pulse_end = time.time()
+        while GPIO.input(sensor_id) == 1:
+            pulse_end = time.time()
 
-    pulse_duration = pulse_end - pulse_start
-    distance = pulse_duration * 17150
-    distance = round(distance, 2)
-    return distance
+        pulse_duration = pulse_end - pulse_start
+        distance = pulse_duration * 17150
+        distance = round(distance, 2)
+        if distance >= 0:
+            retries += 1
+            complex_distance += distance
+
+    complex_distance = round(complex_distance / retries)
+    return complex_distance
 
 
-GPIO.setup(TRIG, GPIO.OUT)
-GPIO.setup(ECHO, GPIO.IN)
-GPIO.setup(ECHO2, GPIO.IN)
+GPIO.setup(config.ultrasonic_trigger_pin, GPIO.OUT)
+GPIO.setup(config.ultrasonic_pin1, GPIO.IN)
+GPIO.setup(config.ultrasonic_pin2, GPIO.IN)
+GPIO.setup(config.ultrasonic_pin3, GPIO.IN)
 
-GPIO.output(TRIG, False)
+
+GPIO.output(config.ultrasonic_trigger_pin, False)
 print("Waiting For Sensor To Settle")
-time.sleep(2)
+time.sleep(1)
 
 for i in range(10):
-    rez1 = measure_distance(1)
-    time.sleep(0.1)
-    rez2 = measure_distance(1)
-    time.sleep(0.1)
-    rez3 = measure_distance(1)
-    final = round((rez1 + rez2 + rez3) / 3, 2)
-
-    print("Distance : ", final)
-    time.sleep(0.7)
+    print("Sensor 1 : ", measure_distance(config.ultrasonic_pin1))
+    print("Sensor 2 : ", measure_distance(config.ultrasonic_pin2))
+    print("Sensor 3 : ", measure_distance(config.ultrasonic_pin3))
+    time.sleep(1)
 
 GPIO.cleanup()
