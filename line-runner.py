@@ -1,12 +1,14 @@
 import config
 from RPi import GPIO
 from threading import Thread
-from gpiozero import PWMOutputDevice
+#from gpiozero import PWMOutputDevice
 import time
 import RFIDReader
 import FollowMeBaby
 
 config.init()
+
+GPIO.setmode(GPIO.BOARD)
 
 # Create thread for RFID reading
 rfid = RFIDReader.RFIDReader()
@@ -23,8 +25,16 @@ counter = 0
 
 # Initialise objects for H-Bridge GPIO PWM pins
 # Set initial duty cycle to 0 and frequency to 1000
-# driveLeft = PWMOutputDevice(config.left_motor_pwm, True, 0, 1000)
-# driveRight = PWMOutputDevice(config.right_motor_pwm, True, 0, 1000)
+GPIO.setup(config.left_motor_pwm, GPIO.OUT)
+GPIO.setup(config.left_motor_direction, GPIO.OUT)
+GPIO.setup(config.left_motor_direction_inv, GPIO.OUT)
+GPIO.setup(config.right_motor_pwm, GPIO.OUT)
+GPIO.setup(config.right_motor_direction, GPIO.OUT)
+GPIO.setup(config.right_motor_direction_inv, GPIO.OUT)
+
+driveLeft = GPIO.PWM(config.left_motor_pwm, 1000)
+driveRight = GPIO.PWM(config.right_motor_pwm, 1000)
+
 # Initialise objects for H-Bridge digital GPIO pins
 # forwardLeft = PWMOutputDevice(config.left_motor_direction)
 # forwardRight = PWMOutputDevice(config.right_motor_direction)

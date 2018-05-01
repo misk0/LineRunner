@@ -39,10 +39,12 @@ def init():
 left_encoder = 17
 left_motor_pwm = 23
 left_motor_direction = 27
+left_motor_direction_inv = 27
 # Motor2 - right
 right_encoder = 18
 right_motor_pwm = 24
 right_motor_direction = 22
+right_motor_direction_inv = 22
 
 # RFID config
 rfid_mosi = 19
