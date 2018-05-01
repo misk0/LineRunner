@@ -8,10 +8,6 @@ import FollowMeBaby
 
 config.init()
 
-def line_follow(self):
-    do_something = True
-
-
 # Create thread for RFID reading
 rfid = RFIDReader.RFIDReader()
 rfidThread = Thread(target=rfid.run)
@@ -56,7 +52,7 @@ while config.walk_running:
 
 print(config.obstacle_number)
 rfid.terminate()
-follower.terminate()
+#follower.terminate()
 
 # driveLeft.close()
 # driveRight.close()
