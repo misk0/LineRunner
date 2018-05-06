@@ -11,10 +11,10 @@ def init():
 
     # Speed of left tracker
     global walk_speed_left
-    walk_speed_left = 0
+    walk_speed_left = max_left_speed
     # Speed of right tracker
     global walk_speed_right
-    walk_speed_right = 0
+    walk_speed_right = max_right_speed
 
     # When True line following method should be used to guide robot movement
     global  follow_the_line
@@ -33,18 +33,21 @@ def init():
     obstacle_number = 0
 
 
+max_left_speed = 54
+max_right_speed = 60
+
 # * * * * * * * * * * * *  CONSTANTS * * * * * * * * * * * * * * * *
 # PIN configuration - GPIO number (not PIN)
 # Motor1 - left
-left_encoder = 17
-left_motor_pwm = 23
-left_motor_direction = 27
-left_motor_direction_inv = 27
+right_encoder = 11
+right_motor_pwm = 16
+right_motor_direction = 13
+right_motor_direction_inv = 8
 # Motor2 - right
-right_encoder = 18
-right_motor_pwm = 24
-right_motor_direction = 22
-right_motor_direction_inv = 22
+left_encoder = 12
+left_motor_pwm = 18
+left_motor_direction = 15
+left_motor_direction_inv = 10
 
 # RFID config
 rfid_mosi = 19
