@@ -10,6 +10,9 @@ try:
         rfid_id = reader.read_id_no_block()
         if rfid_id is not None:
             print(rfid_id)
+        else:
+            print("no")
+
             #time.sleep(0.2)
 finally:
     GPIO.cleanup()

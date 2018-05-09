@@ -92,8 +92,8 @@ def measure_distance(sensor_id, debug=False):
 
 # * * * * * * * * * * * * * * * * * * * * * * * * * *
 # Main program
-config.walk_speed_left = 30
-config.walk_speed_right = 32
+config.walk_speed_left = 0
+config.walk_speed_right = 0
 driveLeft.start(config.walk_speed_left)
 driveRight.start(config.walk_speed_right)
 
@@ -109,8 +109,8 @@ while config.walk_running:
     driveLeft.ChangeDutyCycle(config.walk_speed_left)
     driveRight.ChangeDutyCycle(config.walk_speed_right)
 
-    distance_left = measure_distance(config.ultrasonic_pin1)
-    print("Left :", distance_left)
+    #distance_left = measure_distance(config.ultrasonic_pin1)
+    #print("Left :", distance_left)
 
 
 print(config.obstacle_number)

@@ -46,7 +46,7 @@ print("Waiting For Sensor To Settle")
 time.sleep(1)
 
 for i in range(10):
-    print("Sensor left : ", measure_distance(config.ultrasonic_pin1, False))
+    #print("Sensor left : ", measure_distance(config.ultrasonic_pin1, False))
     print("Sensor right : ", measure_distance(config.ultrasonic_pin2, False))
     #print("Sensor 3 : ", measure_distance(config.ultrasonic_pin3))
     time.sleep(1)

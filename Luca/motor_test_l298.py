@@ -22,14 +22,15 @@ I = 0
 GPIO.setmode(GPIO.BOARD)  # Set Pi to use pin number when referencing GPIO pins.
 
 GPIO.setup(16, GPIO.OUT)  # Set GPIO pin 12 to output mode.
-GPIO.setup(18, GPIO.OUT)  # Set GPIO pin 12 to output mode.
 GPIO.setup(13, GPIO.OUT)  # Set GPIO pin 12 to output mode.
 GPIO.setup(15, GPIO.OUT)  # Set GPIO pin 12 to output mode.
 GPIO.setup(8, GPIO.OUT)  # Set GPIO pin 12 to output mode.
 GPIO.setup(10, GPIO.OUT)  # Set GPIO pin 12 to output mode.
+GPIO.setup(12, GPIO.OUT)  # Set GPIO pin 12 to output mode.
+
 
 pwm1 = GPIO.PWM(16, 500)  # Initialize PWM on pwmPin 100Hz frequency
-pwm2 = GPIO.PWM(18, 500)  # Initialize PWM on pwmPin 100Hz frequency
+pwm2 = GPIO.PWM(12, 500)  # Initialize PWM on pwmPin 100Hz frequency
 
 pwm1.start(0)  # Start PWM with 0% duty cycle
 pwm2.start(0)  # Start PWM with 0% duty cycle
@@ -68,7 +69,7 @@ GPIO.setup(lineDxMax, GPIO.IN)
 
 previousError = 0
 Kp = 15
-Kd = 15
+Kd = 20
 Ki = 0
 print("parto")
 error = 0

@@ -39,13 +39,13 @@ max_right_speed = 60
 # * * * * * * * * * * * *  CONSTANTS * * * * * * * * * * * * * * * *
 # PIN configuration - GPIO number (not PIN)
 # Motor1 - left
-right_encoder = 11
+#right_encoder = 11
 right_motor_pwm = 16
 right_motor_direction = 13
 right_motor_direction_inv = 8
 # Motor2 - right
-left_encoder = 12
-left_motor_pwm = 18
+#left_encoder = 12
+left_motor_pwm = 12
 left_motor_direction = 15
 left_motor_direction_inv = 10
 
