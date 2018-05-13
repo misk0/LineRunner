@@ -421,5 +421,6 @@ class MFRC522:
         self.Write_MFRC522(self.ModeReg, 0x3D)
 
         self.Write_MFRC522(self.RFCfgReg, (0x07 << 4))
-
+        # self.Write_MFRC522(0x26, 0x7F)
+        # self.Write_MFRC522(0x26,0x7F)
         self.AntennaOn()
