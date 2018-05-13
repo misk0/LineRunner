@@ -36,6 +36,7 @@ GPIO.setup(config.right_motor_direction_inv, GPIO.OUT)
 driveLeft = GPIO.PWM(config.left_motor_pwm, 100)
 driveRight = GPIO.PWM(config.right_motor_pwm, 100)
 
+# Helper functions
 # Initialise objects for H-Bridge digital GPIO pins
 back = False
 
@@ -51,11 +52,14 @@ if not back:
     GPIO.output(config.right_motor_direction, GPIO.HIGH)
     GPIO.output(config.right_motor_direction_inv, GPIO.LOW)
 
+
 # Initialize distance sensors
-GPIO.setup(config.ultrasonic_trigger_pin, GPIO.OUT)
-GPIO.setup(config.ultrasonic_pin1, GPIO.IN)
-GPIO.setup(config.ultrasonic_pin2, GPIO.IN)
-GPIO.setup(config.ultrasonic_pin3, GPIO.IN)
+GPIO.setup(config.ultrasonic_triggers[config.US_LEFT], GPIO.OUT)
+GPIO.setup(config.ultrasonic_triggers[config.US_CENTER], GPIO.OUT)
+GPIO.setup(config.ultrasonic_triggers[config.US_RIGHT], GPIO.OUT)
+GPIO.setup(config.ultrasonic_pins[config.US_LEFT], GPIO.OUT)
+GPIO.setup(config.ultrasonic_pins[config.US_CENTER], GPIO.OUT)
+GPIO.setup(config.ultrasonic_pins[config.US_RIGHT], GPIO.OUT)
 
 
 def measure_distance(sensor_id, debug=False):
@@ -92,8 +96,9 @@ def measure_distance(sensor_id, debug=False):
 
 # * * * * * * * * * * * * * * * * * * * * * * * * * *
 # Main program
-config.walk_speed_left = 0
-config.walk_speed_right = 0
+# * * * * * * * * * * * * * * * * * * * * * * * * * *
+config.walk_speed_left = 40
+config.walk_speed_right = 44
 driveLeft.start(config.walk_speed_left)
 driveRight.start(config.walk_speed_right)
 
@@ -117,6 +122,7 @@ print(config.obstacle_number)
 driveLeft.stop()
 driveRight.stop()
 
+time.sleep(2)
 rfid.terminate()
 #distance.terminate()
 #follower.terminate()
