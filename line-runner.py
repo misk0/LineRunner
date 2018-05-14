@@ -241,7 +241,6 @@ while config.walk_running:
 
     if config.obstacle_number > -1:
         print("Found obstacle", config.obstacle_number)
-    time.sleep(0.001)
 
     #distance_left = measure_distance(config.ultrasonic_pin1)
     #print("Left :", distance_left)
