@@ -6,6 +6,7 @@ import RFIDReader
 import FoundInSpace
 import signal
 import sys
+import Distance
 
 config.init()
 
@@ -101,6 +102,53 @@ def measure_distance(sensor_id, debug=False):
     if retries > 0:
         complex_distance = round(complex_distance / retries, 2)
     return complex_distance
+
+def follow_distance(debug=False):
+    DistanceLeft = Distance.measure_distance(config.US_LEFT, False)
+    DistanceMid = Distance.measure_distance(config.US_CENTER, False)
+    DistanceRight = Distance.measure_distance(config.US_RIGHT, False)
+
+    if DistanceRight <= config.Distance_MinValue:
+        config.line_error = -4
+        if debug:
+            print("DistRight too small, go left")
+    elif DistanceLeft <= config.Distance_MinValue:
+        config.line_error = 4
+        if debug:
+            print("DistLeft too small, go right")
+    elif DistanceRight > DistanceMid and DistanceRight > DistanceLeft:
+        config.line_error = 3
+        if debug:
+            print("DistRight big, go right")
+    elif DistanceMid > DistanceRight and DistanceMid > DistanceLeft:
+        config.line_error = 0
+        if debug:
+            print("Distmid big, go FW")
+    elif DistanceLeft > DistanceMid and DistanceLeft > DistanceRight:
+        config.line_error = -3
+        if debug:
+            print("DistLeft big, go left")
+
+    P = config.dist_error
+    config.dist_integrative = config.dist_integrative + config.dist_error
+    D = config.dist_error - config.dist_previous_error
+    PIDvalue = (config.dist_kp * P) + (config.dist_ki * config.dist_integrative) + (config.dist_kd * D)
+
+    if config.dist_left_speed - PIDvalue > 100:
+        config.walk_speed_left = 100
+    elif config.dist_left_speed - PIDvalue < config.min_left_speed:
+        config.walk_speed_left = 0
+    else:
+        config.walk_speed_left = config.dist_left_speed - PIDvalue
+
+    if config.dist_right_speed + PIDvalue > 100:
+        config.walk_speed_right = 100
+    elif config.dist_right_speed + PIDvalue < config.min_right_speed:
+        config.walk_speed_right = 0
+    else:
+        config.walk_speed_right = config.dist_right_speed + PIDvalue
+
+    config.dist_previous_error = config.dist_error
 
 def follow_line(debug=False):
     lineSxMaxValue = GPIO.input(config.line_follow_sxmax)
