@@ -109,23 +109,23 @@ def follow_distance(debug=False):
     DistanceRight = Distance.measure_distance(config.US_RIGHT, False)
 
     if DistanceRight <= config.Distance_MinValue:
-        config.line_error = -4
+        config.dist_error = -4
         if debug:
             print("DistRight too small, go left")
     elif DistanceLeft <= config.Distance_MinValue:
-        config.line_error = 4
+        config.dist_error = 4
         if debug:
             print("DistLeft too small, go right")
     elif DistanceRight > DistanceMid and DistanceRight > DistanceLeft:
-        config.line_error = 3
+        config.dist_error = 3
         if debug:
             print("DistRight big, go right")
     elif DistanceMid > DistanceRight and DistanceMid > DistanceLeft:
-        config.line_error = 0
+        config.dist_error = 0
         if debug:
             print("Distmid big, go FW")
     elif DistanceLeft > DistanceMid and DistanceLeft > DistanceRight:
-        config.line_error = -3
+        config.dist_error = -3
         if debug:
             print("DistLeft big, go left")
 
