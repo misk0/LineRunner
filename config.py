@@ -44,19 +44,18 @@ def init():
     global line_integrative
     line_integrative = 0
 
-    global line_kp
-    line_kp = 15
-
-    global line_kd
-    line_kd = 20
-
-    global line_ki
-    line_ki = 0
-
     global line_error
     line_error = 0
 
-
+    global dist_error
+    dist_error = 0
+    
+    global dist_integrative
+    dist_integrative = 0
+    
+    global dist_previous_error
+    dist_previous_error = 0
+    
 # * * * * * * * * * * * *  CONSTANTS * * * * * * * * * * * * * * * *
 max_left_speed = 54
 max_right_speed = 60
@@ -66,6 +65,19 @@ line_right_speed = 58
 
 min_left_speed = 37
 min_right_speed = 35
+
+line_kp = 15
+line_kd = 20
+line_ki = 0
+
+Distance_MinValue = 20
+
+dist_kp = 15
+dist_kd = 20
+dist_ki = 0
+
+dist_left_speed = 60
+dist_right_speed = 58
 
 
 obstacle_list = ["labyrinth-simple", "labyrinth-complex", "ninepins", "trapeze", "chessboard", "wreckage",
