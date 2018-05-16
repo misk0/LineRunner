@@ -70,14 +70,14 @@ line_kp = 15
 line_kd = 20
 line_ki = 0
 
-Distance_MinValue = 20
+Distance_MinValue = 10
 
-dist_kp = 15
-dist_kd = 20
+dist_kp = 40
+dist_kd = 0
 dist_ki = 0
 
-dist_left_speed = 60
-dist_right_speed = 58
+dist_left_speed = 50
+dist_right_speed = 48
 
 
 obstacle_list = ["labyrinth-simple", "labyrinth-complex", "ninepins", "trapeze", "chessboard", "wreckage",
@@ -106,15 +106,15 @@ rfid_sck = 23
 rfid_sda = 24
 
 # Ultrasonic sensors
-US_LEFT = 0
+US_LEFT = 2
 US_CENTER = 1
-US_RIGHT = 2
+US_RIGHT = 0
 ultrasonic_pins = [31, 32, 33]
 ultrasonic_triggers = [3, 5, 7]
 
 # Line follow sensors
-line_follow_sxmax = 40
-line_follow_sxmin = 38
+line_follow_lmax = 35
+line_follow_lmin = 36
 line_follow_mid = 37
-line_follow_dxmin = 36
-line_follow_dxmax = 35
+line_follow_rmin = 38
+line_follow_rmax = 40

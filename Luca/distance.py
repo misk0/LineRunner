@@ -2,8 +2,8 @@ import RPi.GPIO as GPIO
 import time
 import signal
 
-ultra_pin = [31,32,33]
-ultra_trigger = [7, 5, 29]
+ultra_pin = [31, 32, 33]
+ultra_trigger = [3, 5, 7]
 
 ultra_left = 0
 ultra_center = 1

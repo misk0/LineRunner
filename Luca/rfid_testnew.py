@@ -10,29 +10,29 @@ from pirc522 import RFID
 
 GPIO.setmode(GPIO.BOARD)
 
-GPIO.setup(config.right_motor_pwm, GPIO.OUT)
-GPIO.setup(config.right_motor_direction, GPIO.OUT)
-GPIO.setup(config.right_motor_direction_inv, GPIO.OUT)
-GPIO.setup(config.left_motor_direction, GPIO.OUT)
-GPIO.setup(config.left_motor_direction_inv, GPIO.OUT)
-GPIO.setup(config.left_motor_pwm, GPIO.OUT)
+# GPIO.setup(config.right_motor_pwm, GPIO.OUT)
+# GPIO.setup(config.right_motor_direction, GPIO.OUT)
+# GPIO.setup(config.right_motor_direction_inv, GPIO.OUT)
+# GPIO.setup(config.left_motor_direction, GPIO.OUT)
+# GPIO.setup(config.left_motor_direction_inv, GPIO.OUT)
+# GPIO.setup(config.left_motor_pwm, GPIO.OUT)
 
 
-pwm1 = GPIO.PWM(config.right_motor_pwm, 500)  # Initialize PWM on pwmPin 100Hz frequency
-pwm2 = GPIO.PWM(config.left_motor_pwm, 500)  # Initialize PWM on pwmPin 100Hz frequency
-
-pwm1.start(0)  # Start PWM with 0% duty cycle
-pwm2.start(0)  # Start PWM with 0% duty cycle
-
-GPIO.output(config.right_motor_direction, True)
-GPIO.output(config.right_motor_direction_inv, False)
-GPIO.output(config.left_motor_direction, True)
-GPIO.output(config.left_motor_direction_inv, False)
-
-I = 0
-
-pwm1.ChangeDutyCycle(100)
-pwm2.ChangeDutyCycle(100)
+# pwm1 = GPIO.PWM(config.right_motor_pwm, 500)  # Initialize PWM on pwmPin 100Hz frequency
+# pwm2 = GPIO.PWM(config.left_motor_pwm, 500)  # Initialize PWM on pwmPin 100Hz frequency
+#
+# pwm1.start(0)  # Start PWM with 0% duty cycle
+# pwm2.start(0)  # Start PWM with 0% duty cycle
+#
+# GPIO.output(config.right_motor_direction, True)
+# GPIO.output(config.right_motor_direction_inv, False)
+# GPIO.output(config.left_motor_direction, True)
+# GPIO.output(config.left_motor_direction_inv, False)
+#
+# I = 0
+#
+# pwm1.ChangeDutyCycle(100)
+# pwm2.ChangeDutyCycle(100)
 
 
 run = True
@@ -43,14 +43,14 @@ util.debug = True
 def end_read(signal,frame):
     global run
     print("\nCtrl+C captured, ending read.")
-    pwm1.ChangeDutyCycle(0)
-    pwm2.ChangeDutyCycle(0)
-    pwm1.stop()
-    pwm2.stop()
+    # pwm1.ChangeDutyCycle(0)
+    # pwm2.ChangeDutyCycle(0)
+    # pwm1.stop()
+    # pwm2.stop()
     # rfid.terminate()
-    # GPIO.cleanup()
+    GPIO.cleanup()
     run = False
-    # rdr.cleanup()
+    rdr.cleanup()
     sys.exit()
 
 signal.signal(signal.SIGINT, end_read)

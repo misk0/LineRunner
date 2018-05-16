@@ -7,7 +7,6 @@ import FoundInSpace
 import signal
 import sys
 import Distance
-
 config.init()
 
 #GPIO.setmode(GPIO.BOARD)
@@ -16,10 +15,6 @@ config.init()
 rfid = RFIDReader.RFIDReader()
 rfidThread = Thread(target=rfid.run)
 rfidThread.start()
-
-#distance = FoundInSpace.FoundInSpace()
-#distanceThread = Thread(target=distance.run)
-#distanceThread.start()
 
 # Initialise objects for H-Bridge GPIO PWM pins
 GPIO.setup(config.left_motor_pwm, GPIO.OUT)
@@ -53,16 +48,16 @@ if not back:
 GPIO.setup(config.ultrasonic_triggers[config.US_LEFT], GPIO.OUT)
 GPIO.setup(config.ultrasonic_triggers[config.US_CENTER], GPIO.OUT)
 GPIO.setup(config.ultrasonic_triggers[config.US_RIGHT], GPIO.OUT)
-GPIO.setup(config.ultrasonic_pins[config.US_LEFT], GPIO.OUT)
-GPIO.setup(config.ultrasonic_pins[config.US_CENTER], GPIO.OUT)
-GPIO.setup(config.ultrasonic_pins[config.US_RIGHT], GPIO.OUT)
+GPIO.setup(config.ultrasonic_pins[config.US_LEFT], GPIO.IN)
+GPIO.setup(config.ultrasonic_pins[config.US_CENTER], GPIO.IN)
+GPIO.setup(config.ultrasonic_pins[config.US_RIGHT], GPIO.IN)
 
 # Initialize line sensors
-GPIO.setup(config.line_follow_sxmax, GPIO.IN)
-GPIO.setup(config.line_follow_sxmin, GPIO.IN)
+GPIO.setup(config.line_follow_lmax, GPIO.IN)
+GPIO.setup(config.line_follow_lmin, GPIO.IN)
 GPIO.setup(config.line_follow_mid, GPIO.IN)
-GPIO.setup(config.line_follow_dxmin, GPIO.IN)
-GPIO.setup(config.line_follow_dxmax, GPIO.IN)
+GPIO.setup(config.line_follow_rmin, GPIO.IN)
+GPIO.setup(config.line_follow_rmax, GPIO.IN)
 
 def end_read(signal,frame):
     print("\nCtrl+C captured, ending read.")
@@ -72,20 +67,20 @@ def end_read(signal,frame):
     GPIO.cleanup()
     sys.exit()
 
-def measure_distance(sensor_id, debug=False):
+def measure_distance(sensor_pos, debug=False):
     complex_distance = 0
     retries = 0
     pulse_start = 0
     pulse_end = 0
 
     for counter in range(3):
-        GPIO.output(config.ultrasonic_trigger_pin, GPIO.HIGH)
+        GPIO.output(config.ultrasonic_triggers[sensor_pos], GPIO.HIGH)
         time.sleep(0.00001)
-        GPIO.output(config.ultrasonic_trigger_pin, GPIO.LOW)
-        while GPIO.input(sensor_id) == 0:
+        GPIO.output(config.ultrasonic_triggers[sensor_pos], GPIO.LOW)
+        while GPIO.input(config.ultrasonic_pins[sensor_pos]) == 0:
             pulse_start = time.time()
 
-        while GPIO.input(sensor_id) == 1:
+        while GPIO.input(config.ultrasonic_pins[sensor_pos]) == 1:
             pulse_end = time.time()
 
         pulse_duration = pulse_end - pulse_start
@@ -93,38 +88,42 @@ def measure_distance(sensor_id, debug=False):
         distance = round(distance, 2)
 
         if debug:
-            print("Sensor: %s Current distance: %s" % (sensor_id, distance))
-        if 0 < distance < 400:
-            retries += 1
-            complex_distance += distance
+            print("Sensor : %s Current distance: %s" % (sensor_pos, distance))
+        if complex_distance == 0:
+            complex_distance = distance
+
+        if distance < complex_distance:
+            complex_distance = distance
         time.sleep(0.05)
 
-    if retries > 0:
-        complex_distance = round(complex_distance / retries, 2)
     return complex_distance
 
 def follow_distance(debug=False):
-    DistanceLeft = Distance.measure_distance(config.US_LEFT, False)
-    DistanceMid = Distance.measure_distance(config.US_CENTER, False)
-    DistanceRight = Distance.measure_distance(config.US_RIGHT, False)
+    distance_left = Distance.measure_distance(config.US_LEFT, False)
+    distance_middle = Distance.measure_distance(config.US_CENTER, False)
+    distance_right = Distance.measure_distance(config.US_RIGHT, False)
 
-    if DistanceRight <= config.Distance_MinValue:
+    if debug:
+        print("Left distance: ", distance_left)
+        print("Middle distance: ", distance_middle)
+        print("Right distance: ", distance_right)
+    if distance_right <= config.Distance_MinValue:
         config.dist_error = -4
         if debug:
             print("DistRight too small, go left")
-    elif DistanceLeft <= config.Distance_MinValue:
+    elif distance_left <= config.Distance_MinValue:
         config.dist_error = 4
         if debug:
             print("DistLeft too small, go right")
-    elif DistanceRight > DistanceMid and DistanceRight > DistanceLeft:
+    elif distance_right > distance_middle and distance_right > distance_left:
         config.dist_error = 3
         if debug:
             print("DistRight big, go right")
-    elif DistanceMid > DistanceRight and DistanceMid > DistanceLeft:
+    elif distance_middle > distance_right and distance_middle > distance_left:
         config.dist_error = 0
         if debug:
             print("Distmid big, go FW")
-    elif DistanceLeft > DistanceMid and DistanceLeft > DistanceRight:
+    elif distance_left > distance_middle and distance_left > distance_right:
         config.dist_error = -3
         if debug:
             print("DistLeft big, go left")
@@ -151,44 +150,44 @@ def follow_distance(debug=False):
     config.dist_previous_error = config.dist_error
 
 def follow_line(debug=False):
-    lineSxMaxValue = GPIO.input(config.line_follow_sxmax)
-    lineSxMinValue = GPIO.input(config.line_follow_sxmin)
-    lineMidValue = GPIO.input(config.line_follow_mid)
-    lineDxMinValue = GPIO.input(config.line_follow_dxmin)
-    lineDxMaxValue = GPIO.input(config.line_follow_dxmax)
-    if lineSxMaxValue == 0 and lineSxMinValue == 0 and lineMidValue == 0 and lineDxMinValue == 0 and lineDxMaxValue == 1:
+    left_max_value = GPIO.input(config.line_follow_lmax)
+    left_min_value = GPIO.input(config.line_follow_lmin)
+    middle_value = GPIO.input(config.line_follow_mid)
+    right_min_value = GPIO.input(config.line_follow_rmin)
+    right_max_value = GPIO.input(config.line_follow_rmax)
+    if left_max_value == 0 and left_min_value == 0 and middle_value == 0 and right_min_value == 0 and right_max_value == 1:
         config.line_error = 4
         if debug:
             print("troppo sin")
-    if lineSxMaxValue == 0 and lineSxMinValue == 0 and lineMidValue == 0 and lineDxMinValue == 1 and lineDxMaxValue == 1:
+    if left_max_value == 0 and left_min_value == 0 and middle_value == 0 and right_min_value == 1 and right_max_value == 1:
         config.line_error = 3
         if debug:
             print("quasitroppo sin")
-    if lineSxMaxValue == 0 and lineSxMinValue == 0 and lineMidValue == 0 and lineDxMinValue == 1 and lineDxMaxValue == 0:
+    if left_max_value == 0 and left_min_value == 0 and middle_value == 0 and right_min_value == 1 and right_max_value == 0:
         config.line_error = 2
         if debug:
             print("unpopiu sin")
-    if lineSxMaxValue == 0 and lineSxMinValue == 0 and lineMidValue == 1 and lineDxMinValue == 1 and lineDxMaxValue == 0:
+    if left_max_value == 0 and left_min_value == 0 and middle_value == 1 and right_min_value == 1 and right_max_value == 0:
         config.line_error = 1
         if debug:
             print("unpo sin")
-    if lineSxMaxValue == 0 and lineSxMinValue == 0 and lineMidValue == 1 and lineDxMinValue == 0 and lineDxMaxValue == 0:
+    if left_max_value == 0 and left_min_value == 0 and middle_value == 1 and right_min_value == 0 and right_max_value == 0:
         config.line_error = 0
         if debug:
             print("mid")
-    if lineSxMaxValue == 0 and lineSxMinValue == 1 and lineMidValue == 1 and lineDxMinValue == 0 and lineDxMaxValue == 0:
+    if left_max_value == 0 and left_min_value == 1 and middle_value == 1 and right_min_value == 0 and right_max_value == 0:
         config.line_error = -1
         if debug:
             print("unpo dx")
-    if lineSxMaxValue == 0 and lineSxMinValue == 1 and lineMidValue == 0 and lineDxMinValue == 0 and lineDxMaxValue == 0:
+    if left_max_value == 0 and left_min_value == 1 and middle_value == 0 and right_min_value == 0 and right_max_value == 0:
         config.line_error = -2
         if debug:
             print("unpopiu dx")
-    if lineSxMaxValue == 1 and lineSxMinValue == 1 and lineMidValue == 0 and lineDxMinValue == 0 and lineDxMaxValue == 0:
+    if left_max_value == 1 and left_min_value == 1 and middle_value == 0 and right_min_value == 0 and right_max_value == 0:
         config.line_error = -3
         if debug:
             print("quasitroppo sx")
-    if lineSxMaxValue == 1 and lineSxMinValue == 0 and lineMidValue == 0 and lineDxMinValue == 0 and lineDxMaxValue == 0:
+    if left_max_value == 1 and left_min_value == 0 and middle_value == 0 and right_min_value == 0 and right_max_value == 0:
         config.line_error = -4
         if debug:
             print("troppo dx")
@@ -221,8 +220,8 @@ def follow_line(debug=False):
 # * * * * * * * * * * * * * * * * * * * * * * * * * *
 signal.signal(signal.SIGINT, end_read)
 
-config.walk_speed_left = 40
-config.walk_speed_right = 44
+config.walk_speed_left = 0 #40
+config.walk_speed_right = 0 #44
 config.drive_left.start(config.walk_speed_left)
 config.drive_right.start(config.walk_speed_right)
 
@@ -235,6 +234,8 @@ while config.walk_running:
     #print("Line {}".format(counter))
 
     follow_line()
+
+    # follow_distance(debug=True)
 
     config.drive_left.ChangeDutyCycle(config.walk_speed_left)
     config.drive_right.ChangeDutyCycle(config.walk_speed_right)
