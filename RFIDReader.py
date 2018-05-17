@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 import time
-import SimpleMFRC522
+#import SimpleMFRC522
 import config
 from pirc522 import RFID
 
