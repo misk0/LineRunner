@@ -88,33 +88,40 @@ obstacle_end = [(11, 12, 13, 14), (21, 22, 23, 24), (31, 32, 33, 34), (41, 42, 4
 
 
 
-# PIN configuration - GPIO number (not PIN)
-# Motor1 - right
-right_motor_pwm = 13
-right_motor_direction = 15
-right_motor_direction_inv = 16
-# Motor2 - right
-left_motor_pwm = 11
-left_motor_direction = 8
-left_motor_direction_inv = 10
+# PIN configuration - PIN number
 
-# RFID config
-rfid_mosi = 19
-rfid_miso = 21
-rfid_rst = 22
-rfid_sck = 23
-rfid_sda = 24
+#miscellaneous
+program_switch = 3
+
+en_shoot = 16
 
 # Ultrasonic sensors
-US_LEFT = 2
+US_LEFT = 0
 US_CENTER = 1
-US_RIGHT = 0
-ultrasonic_pins = [31, 32, 33]
-ultrasonic_triggers = [3, 5, 7]
+US_RIGHT = 2
+ultrasonic_triggers = [26, 7, 29]
+ultrasonic_echo = [32, 33, 31]
+
+# Motor right
+right_motor_pwm = 11
+right_motor_direction = 13
+right_motor_direction_inv = 15
+
+# Motor left
+left_motor_pwm = 8
+left_motor_direction = 12
+left_motor_direction_inv = 10
 
 # Line follow sensors
-line_follow_lmax = 35
-line_follow_lmin = 36
-line_follow_mid = 37
-line_follow_rmin = 38
-line_follow_rmax = 40
+line_follow_lmax = 36
+line_follow_lmin = 38
+line_follow_mid = 40
+line_follow_rmin = 37
+line_follow_rmax = 35
+
+# # RFID config
+# rfid_mosi = 19
+# rfid_miso = 21
+# rfid_rst = 22
+# rfid_sck = 23
+# rfid_sda = 24
