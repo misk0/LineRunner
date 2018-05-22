@@ -119,9 +119,9 @@ line_follow_mid = 40
 line_follow_rmin = 37
 line_follow_rmax = 35
 
-# # RFID config
-# rfid_mosi = 19
-# rfid_miso = 21
-# rfid_rst = 22
-# rfid_sck = 23
-# rfid_sda = 24
+# RFID config
+rfid_mosi = 19
+rfid_miso = 21
+rfid_rst = 22
+rfid_sck = 23
+rfid_sda = 24
