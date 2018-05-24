@@ -12,7 +12,7 @@ import Line
 #Initialize global variables
 config.init()
 
-#GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BOARD)
 
 # Create thread for RFID reading
 rfid = RFIDReader.RFIDReader()
