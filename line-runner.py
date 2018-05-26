@@ -3,8 +3,10 @@ from RPi import GPIO
 from threading import Thread
 import time
 import RFIDReader
-import FoundInSpace
+# import testRFID
+# import FoundInSpace
 import Distance
+import FollowMeBaby
 import signal
 import end_program
 import Line
@@ -12,25 +14,32 @@ import Line
 #Initialize global variables
 config.init()
 
+# Create thread for RFID reading
+rfid = RFIDReader.RFIDReader()
+# rfid = testRFID.RFIDTest()
+rfidThread = Thread(target=rfid.run)
+rfidThread.start()
 
+
+# GPIO.setmode(GPIO.BOARD)
 #Initialize pins
 
 #Program switch
 GPIO.setup(config.program_switch, GPIO.IN)
 
 #Shooter
-GPIO.setup(en_shoot, GPIO.OUT)
+GPIO.setup(config.en_shoot, GPIO.OUT)
 
 #Distance sensors
 #Left
 GPIO.setup(config.ultrasonic_triggers[config.US_LEFT], GPIO.OUT)
-GPIO.setup(config.ultrasonic_pins[config.US_LEFT], GPIO.IN)
+GPIO.setup(config.ultrasonic_echo[config.US_LEFT], GPIO.IN)
 #Mid
 GPIO.setup(config.ultrasonic_triggers[config.US_CENTER], GPIO.OUT)
-GPIO.setup(config.ultrasonic_pins[config.US_CENTER], GPIO.IN)
+GPIO.setup(config.ultrasonic_echo[config.US_CENTER], GPIO.IN)
 #Right
 GPIO.setup(config.ultrasonic_triggers[config.US_RIGHT], GPIO.OUT)
-GPIO.setup(config.ultrasonic_pins[config.US_RIGHT], GPIO.IN)
+GPIO.setup(config.ultrasonic_echo[config.US_RIGHT], GPIO.IN)
 
 #Motor right
 GPIO.setup(config.right_motor_pwm, GPIO.OUT)
@@ -92,34 +101,38 @@ GPIO.output(config.right_motor_direction_inv, GPIO.LOW)
 #     return complex_distance
 
 
-
-
-
-
 # * * * * * * * * * * * * * * * * * * * * * * * * * *
 # Main program
 # * * * * * * * * * * * * * * * * * * * * * * * * * *
 signal.signal(signal.SIGINT, end_program.end_read)
 
-# Create thread for RFID reading
-rfid = RFIDReader.RFIDReader()
-rfidThread = Thread(target=rfid.run)
-rfidThread.start()
-
-config.walk_speed_left = 0 #40
-config.walk_speed_right = 0 #44
+config.walk_speed_left = 0
+config.walk_speed_right = 0
 config.drive_left.start(config.walk_speed_left)
 config.drive_right.start(config.walk_speed_right)
 
+# ostacoli
+# config.drive_left.ChangeDutyCycle(60)
+# config.drive_right.ChangeDutyCycle(80)
+
+GPIO.output(config.en_shoot,GPIO.HIGH)
 
 while config.walk_running:
 
-    Line.follow_line(debug=False)
+    # Line.follow_line(debug=False)
+    # FollowMeBaby.FollowMe()
+    # config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+    # config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+    loop = 1
 
+
+
+    # if (GPIO.input(config.program_switch)==0):
+    #     print("low")
+    # if (GPIO.input(config.program_switch)==1):
+    #     print("high")
     # Distance.follow_distance(debug=True)
-
-    config.drive_left.ChangeDutyCycle(config.walk_speed_left)
-    config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+    # print(Distance.measure_distance(config.US_RIGHT))
 
     if config.obstacle_number > -1:
         print("Found obstacle", config.obstacle_number)
