@@ -6,13 +6,15 @@ import RFIDReader
 # import testRFID
 # import FoundInSpace
 import Distance
-import FollowMeBaby
+# import FollowMeBaby
 import signal
 import end_program
 import Line
 
 #Initialize global variables
 config.init()
+
+GPIO.setmode(GPIO.BOARD)
 
 # Create thread for RFID reading
 rfid = RFIDReader.RFIDReader()
@@ -115,7 +117,7 @@ config.drive_right.start(config.walk_speed_right)
 # config.drive_left.ChangeDutyCycle(60)
 # config.drive_right.ChangeDutyCycle(80)
 
-GPIO.output(config.en_shoot,GPIO.HIGH)
+GPIO.output(config.en_shoot,GPIO.LOW)
 
 while config.walk_running:
 
@@ -132,7 +134,8 @@ while config.walk_running:
     # if (GPIO.input(config.program_switch)==1):
     #     print("high")
     # Distance.follow_distance(debug=True)
-    # print(Distance.measure_distance(config.US_RIGHT))
+    # print("right",Distance.measure_distance(config.US_RIGHT))
+    print("left",Distance.measure_distance(config.US_CENTER))
 
     if config.obstacle_number > -1:
         print("Found obstacle", config.obstacle_number)

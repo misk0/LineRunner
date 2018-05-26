@@ -9,6 +9,6 @@ def end_read(signal,frame):
     print("\nCtrl+C captured, ending read.")
     config.drive_left.stop()
     config.drive_right.stop()
-    rfid.terminate()
+    # rfid.terminate()
     GPIO.cleanup()
     sys.exit()

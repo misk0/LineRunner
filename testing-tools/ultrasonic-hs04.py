@@ -14,10 +14,10 @@ def measure_distance(sensor_pos, debug=False):
         GPIO.output(config.ultrasonic_triggers[sensor_pos], GPIO.HIGH)
         time.sleep(0.00001)
         GPIO.output(config.ultrasonic_triggers[sensor_pos], GPIO.LOW)
-        while GPIO.input(config.ultrasonic_pins[sensor_pos]) == 0:
+        while GPIO.input(config.ultrasonic_echo[sensor_pos]) == 0:
             pulse_start = time.time()
 
-        while GPIO.input(config.ultrasonic_pins[sensor_pos]) == 1:
+        while GPIO.input(config.ultrasonic_echo[sensor_pos]) == 1:
             pulse_end = time.time()
 
         pulse_duration = pulse_end - pulse_start
@@ -39,9 +39,9 @@ def measure_distance(sensor_pos, debug=False):
 GPIO.setup(config.ultrasonic_triggers[config.US_LEFT], GPIO.OUT)
 GPIO.setup(config.ultrasonic_triggers[config.US_CENTER], GPIO.OUT)
 GPIO.setup(config.ultrasonic_triggers[config.US_RIGHT], GPIO.OUT)
-GPIO.setup(config.ultrasonic_pins[config.US_LEFT], GPIO.IN)
-GPIO.setup(config.ultrasonic_pins[config.US_CENTER], GPIO.IN)
-GPIO.setup(config.ultrasonic_pins[config.US_RIGHT], GPIO.IN)
+GPIO.setup(config.ultrasonic_echo[config.US_LEFT], GPIO.IN)
+GPIO.setup(config.ultrasonic_echo[config.US_CENTER], GPIO.IN)
+GPIO.setup(config.ultrasonic_echo[config.US_RIGHT], GPIO.IN)
 
 
 GPIO.output(config.ultrasonic_triggers[config.US_LEFT], False)

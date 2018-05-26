@@ -1,8 +1,5 @@
 import RPi.GPIO as GPIO
-import time
 import SimpleMFRC522
-import config
-
 
 reader = SimpleMFRC522.SimpleMFRC522()
 try:

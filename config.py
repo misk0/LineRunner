@@ -57,16 +57,19 @@ def init():
     dist_previous_error = 0
     
 # * * * * * * * * * * * *  CONSTANTS * * * * * * * * * * * * * * * *
+# max_left_speed = 54
+# max_right_speed = 60
+
 max_left_speed = 54
 max_right_speed = 60
 
-line_left_speed = 60
-line_right_speed = 58
+line_left_speed = 50#60
+line_right_speed = 50#58
 
 min_left_speed = 37
 min_right_speed = 35
 
-line_kp = 15
+line_kp = 20
 line_kd = 20
 line_ki = 0
 
@@ -104,24 +107,24 @@ ultrasonic_echo = [32, 33, 31]
 
 # Motor right
 right_motor_pwm = 11
-right_motor_direction = 13
-right_motor_direction_inv = 15
+right_motor_direction = 15
+right_motor_direction_inv = 10
 
 # Motor left
-left_motor_pwm = 8
-left_motor_direction = 12
-left_motor_direction_inv = 10
+left_motor_pwm = 13
+left_motor_direction = 8
+left_motor_direction_inv = 12
 
 # Line follow sensors
-line_follow_lmax = 36
-line_follow_lmin = 38
+line_follow_lmax = 35
+line_follow_lmin = 37
 line_follow_mid = 40
-line_follow_rmin = 37
-line_follow_rmax = 35
+line_follow_rmin = 38
+line_follow_rmax = 36
 
-# # RFID config
-# rfid_mosi = 19
-# rfid_miso = 21
-# rfid_rst = 22
-# rfid_sck = 23
-# rfid_sda = 24
+# RFID config
+rfid_mosi = 19
+rfid_miso = 21
+rfid_rst = 22
+rfid_sck = 23
+rfid_sda = 24

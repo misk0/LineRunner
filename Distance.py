@@ -8,19 +8,19 @@ def measure_distance(sensor_pos, debug=False):
     retries = 0
     pulse_start = 0
     pulse_end = 0
-    for counter in range(15):
+    for counter in range(5):
         GPIO.output(config.ultrasonic_triggers[sensor_pos], GPIO.HIGH)
         time.sleep(0.00001)
         GPIO.output(config.ultrasonic_triggers[sensor_pos], GPIO.LOW)
-        while GPIO.input(config.ultrasonic_pins[sensor_pos]) == 0:
+        while GPIO.input(config.ultrasonic_echo[sensor_pos]) == 0:
             pulse_start = time.time()
 
-        while GPIO.input(config.ultrasonic_pins[sensor_pos]) == 1:
+        while GPIO.input(config.ultrasonic_echo[sensor_pos]) == 1:
             pulse_end = time.time()
 
         pulse_duration = pulse_end - pulse_start
         distance = pulse_duration * 17150
-        distance = round(distance, 2)
+        distance = round(distance,1)
         if debug:
             print("Sensor : %s Current distance: %s" % (sensor_pos, distance))
         if complex_distance == 0:
@@ -32,7 +32,7 @@ def measure_distance(sensor_pos, debug=False):
 
     return complex_distance
 
-def follow_distance(debug=False):
+def follow_distance(debug=True):
     distance_left = measure_distance(config.US_LEFT, False)
     distance_middle = measure_distance(config.US_CENTER, False)
     distance_right = measure_distance(config.US_RIGHT, False)

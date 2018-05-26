@@ -50,9 +50,9 @@ def loop():
         GPIO.output(config.left_motor_direction_inv, GPIO.LOW)
         GPIO.output(config.right_motor_direction, GPIO.LOW)
         GPIO.output(config.right_motor_direction_inv, GPIO.HIGH)
-        config.drive_left.ChangeDutyCycle(50)
-        config.drive_right.ChangeDutyCycle(50)
-        time.sleep(1.5)  # time needed to turn 90°
+        config.drive_left.ChangeDutyCycle(78)
+        config.drive_right.ChangeDutyCycle(78)
+        time.sleep(0.705)  # time needed to turn 90° right
         config.drive_left.ChangeDutyCycle(0)
         config.drive_right.ChangeDutyCycle(0)
         GPIO.output(config.left_motor_direction, GPIO.HIGH)
@@ -66,9 +66,9 @@ def loop():
         GPIO.output(config.left_motor_direction_inv, GPIO.HIGH)
         GPIO.output(config.right_motor_direction, GPIO.HIGH)
         GPIO.output(config.right_motor_direction_inv, GPIO.LOW)
-        config.drive_left.ChangeDutyCycle(50)
-        config.drive_right.ChangeDutyCycle(50)
-        time.sleep(1.5)  # time needed to turn 90°
+        config.drive_left.ChangeDutyCycle(80)
+        config.drive_right.ChangeDutyCycle(80)
+        time.sleep(0.7)  # time needed to turn 90° left
         config.drive_left.ChangeDutyCycle(0)
         config.drive_right.ChangeDutyCycle(0)
         GPIO.output(config.left_motor_direction, GPIO.HIGH)
@@ -76,14 +76,14 @@ def loop():
         GPIO.output(config.right_motor_direction, GPIO.HIGH)
         GPIO.output(config.right_motor_direction_inv, GPIO.LOW)
     elif (dist_left < 7):
-        config.drive_left.ChangeDutyCycle(max_left_speed + 20)
-        config.drive_right.ChangeDutyCycle(max_right_speed)
+        config.drive_left.ChangeDutyCycle(config.max_left_speed + 20)
+        config.drive_right.ChangeDutyCycle(config.max_right_speed)
     elif (dist_right < 7):
-        config.drive_left.ChangeDutyCycle(max_left_speed)
-        config.drive_right.ChangeDutyCycle(max_right_speed + 20)
+        config.drive_left.ChangeDutyCycle(config.max_left_speed)
+        config.drive_right.ChangeDutyCycle(config.max_right_speed + 20)
     else:
-        config.drive_left.ChangeDutyCycle(max_left_speed)
-        config.drive_right.ChangeDutyCycle(max_right_speed)
+        config.drive_left.ChangeDutyCycle(config.max_left_speed)
+        config.drive_right.ChangeDutyCycle(config.max_right_speed)
 
 
 # * * * * * * * * * * * * * * * * * * * * * * * * * *
