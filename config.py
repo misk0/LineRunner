@@ -104,13 +104,13 @@ ultrasonic_echo = [32, 33, 31]
 
 # Motor right
 right_motor_pwm = 11
-right_motor_direction = 13
-right_motor_direction_inv = 15
+right_motor_direction = 15
+right_motor_direction_inv = 10
 
 # Motor left
-left_motor_pwm = 8
-left_motor_direction = 12
-left_motor_direction_inv = 10
+left_motor_pwm = 13
+left_motor_direction = 8
+left_motor_direction_inv = 12
 
 # Line follow sensors
 line_follow_lmax = 36
@@ -120,8 +120,8 @@ line_follow_rmin = 37
 line_follow_rmax = 35
 
 # RFID config
-rfid_mosi = 19
-rfid_miso = 21
-rfid_rst = 22
-rfid_sck = 23
-rfid_sda = 24
+# rfid_mosi = 19
+# rfid_miso = 21
+# rfid_rst = 22
+# rfid_sck = 23
+# rfid_sda = 24

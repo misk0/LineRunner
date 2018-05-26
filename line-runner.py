@@ -135,8 +135,7 @@ while config.walk_running:
     #     print("high")
     # Distance.follow_distance(debug=True)
     # print("right",Distance.measure_distance(config.US_RIGHT))
-    print("left",Distance.measure_distance(config.US_CENTER))
-
+    # print("mid",Distance.measure_distance(config.US_CENTER))
     if config.obstacle_number > -1:
         print("Found obstacle", config.obstacle_number)
         print(config.obstacle_number)
