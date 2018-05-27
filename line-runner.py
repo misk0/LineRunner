@@ -3,13 +3,20 @@ from RPi import GPIO
 from threading import Thread
 import time
 import RFIDReader
-# import testRFID
-# import FoundInSpace
-import Distance
-# import FollowMeBaby
 import signal
 import end_program
 import Line
+import PID_final_maze
+import SimpleMaze
+import ComplexMaze
+import Step
+import Ramp
+import Rubble
+import Drone
+import Ninepins
+import Basket
+
+GPIO.cleanup()
 
 #Initialize global variables
 config.init()
@@ -37,8 +44,8 @@ GPIO.setup(config.en_shoot, GPIO.OUT)
 GPIO.setup(config.ultrasonic_triggers[config.US_LEFT], GPIO.OUT)
 GPIO.setup(config.ultrasonic_echo[config.US_LEFT], GPIO.IN)
 #Mid
-GPIO.setup(config.ultrasonic_triggers[config.US_CENTER], GPIO.OUT)
-GPIO.setup(config.ultrasonic_echo[config.US_CENTER], GPIO.IN)
+# GPIO.setup(config.ultrasonic_triggers[config.US_CENTER], GPIO.OUT)
+# GPIO.setup(config.ultrasonic_echo[config.US_CENTER], GPIO.IN)
 #Right
 GPIO.setup(config.ultrasonic_triggers[config.US_RIGHT], GPIO.OUT)
 GPIO.setup(config.ultrasonic_echo[config.US_RIGHT], GPIO.IN)
@@ -108,10 +115,12 @@ GPIO.output(config.right_motor_direction_inv, GPIO.LOW)
 # * * * * * * * * * * * * * * * * * * * * * * * * * *
 signal.signal(signal.SIGINT, end_program.end_read)
 
-config.walk_speed_left = 0
-config.walk_speed_right = 0
+config.walk_speed_left = 40
+config.walk_speed_right = 40
 config.drive_left.start(config.walk_speed_left)
 config.drive_right.start(config.walk_speed_right)
+
+config.LastRFID = " "
 
 # ostacoli
 # config.drive_left.ChangeDutyCycle(60)
@@ -119,13 +128,38 @@ config.drive_right.start(config.walk_speed_right)
 
 GPIO.output(config.en_shoot,GPIO.LOW)
 
-while config.walk_running:
+while True:
+    if config.LastRFID == "labyrinth-simple":
+        SimpleMaze.SimpleMaze()
+    elif config.LastRFID == "labyrinth-complex":
+        ComplexMaze.ComplexMaze()
+    elif config.LastRFID == "drone":
+        Drone.Drone()
+    elif config.LastRFID == "chessboard":
+        Basket.Basket()
+    elif config.LastRFID == "ninepins":
+        Ninepins.Ninepins()
+    elif config.LastRFID == "trapeze":
+        Ramp.Ramp()
+    elif config.LastRFID == "wreckage":
+        Rubble.Rubble()
+    elif config.LastRFID == "stairs":
+        Step.Step()
+    else:
+        if config.LastRFID == "obstacle_end_left":
+            #muovi leggermente a destra
+            config.LastRFID = "taguscitacentrale"
+        if config.LastRFID == "obstacle_end_right":
+            #muovi leggermente a sinistra
+            config.LastRFID = "taguscitacentrale"
 
-    # Line.follow_line(debug=False)
+        #segui linea
+        # Line.follow_line(False)
+
     # FollowMeBaby.FollowMe()
     # config.drive_left.ChangeDutyCycle(config.walk_speed_left)
     # config.drive_right.ChangeDutyCycle(config.walk_speed_right)
-    loop = 1
+
 
 
 
@@ -135,10 +169,13 @@ while config.walk_running:
     #     print("high")
     # Distance.follow_distance(debug=True)
     # print("right",Distance.measure_distance(config.US_RIGHT))
-    # print("mid",Distance.measure_distance(config.US_CENTER))
-    if config.obstacle_number > -1:
-        print("Found obstacle", config.obstacle_number)
-        print(config.obstacle_number)
+    # print("left",Distance.measure_distance(config.US_CENTER))
+    # if config.obstacle_number > -1:
+    #     print("Found obstacle", config.obstacle_number)
+    #     print(config.obstacle_number)
+    PID_final_maze.follow_distance(True)
+    config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+    config.drive_right.ChangeDutyCycle(config.walk_speed_right)
 
 
 

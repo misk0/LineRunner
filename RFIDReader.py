@@ -18,16 +18,19 @@ class RFIDReader:
         # shift last 4 digits in inverse order
         match = str(hex(uid[0]))[2:4] + str(hex(uid[1]))[2:4] + str(hex(uid[2]))[2:4] + str(hex(uid[3]))[2:4]
         print(match)
-        if not config.inside_obstacle:
-            if match in config.obstacle_start:
-                print("Found ", config.obstacle_start.index(match))
-                config.obstacle_number = config.obstacle_start.index(match)
-                # config.inside_obstacle = True
-        else:
-            for quad in config.obstacle_end:
-                if match in quad:
-                    config.obstacle_number = config.obstacle_end.index(quad)
-                    config.inside_obstacle = False
+
+        for quad in config.obstacle_start:
+            if match in quad:
+                config.LastRFID = config.obstacle_list[config.obstacle_end.index(quad)]
+
+        if match in config.obstacle_end_left:
+            print("Found obstacle end left")
+            config.LastRFID = "obstacle_end_left"
+
+        if match in config.obstacle_end_right:
+            print("Found obstacle end right")
+            config.LastRFID = "obstacle_end_right"
+
 
     def run(self):
         try:

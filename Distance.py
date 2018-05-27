@@ -8,7 +8,7 @@ def measure_distance(sensor_pos, debug=False):
     retries = 0
     pulse_start = 0
     pulse_end = 0
-    for counter in range(5):
+    for counter in range(1):
         GPIO.output(config.ultrasonic_triggers[sensor_pos], GPIO.HIGH)
         time.sleep(0.00001)
         GPIO.output(config.ultrasonic_triggers[sensor_pos], GPIO.LOW)
@@ -28,7 +28,7 @@ def measure_distance(sensor_pos, debug=False):
 
         if distance < complex_distance:
             complex_distance = distance
-        time.sleep(0.05)
+        time.sleep(0.01)
 
     return complex_distance
 

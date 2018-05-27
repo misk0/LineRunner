@@ -1,8 +1,8 @@
 # Variables
 def init():
     # when True robot should move
-    global walk_running
-    walk_running = True
+    # global walk_running
+    # walk_running = True
 
     # Automatic means motors should be running continuously
     # When False, encoder should be read and tracker should move only with certain number of rotation
@@ -19,9 +19,11 @@ def init():
     global drive_left
     global drive_right
 
+    global LastRFID
+
     # When True line following method should be used to guide robot movement
-    global  follow_the_line
-    follow_the_line = True
+    # global  follow_the_line
+    # follow_the_line = True
 
     # Value indicate which obstacle is recognized. Usually set by RFID sensor
     # 1 - Simple Labyrinth
@@ -32,17 +34,17 @@ def init():
     # 6 - Wreckage (macerie)
     # 7 - Stairs
     # 8 - Drone
-    global obstacle_number
-    obstacle_number = -1
-    global inside_obstacle
-    inside_obstacle = False
+    # global obstacle_number
+    # obstacle_number = -1
+    # global inside_obstacle
+    # inside_obstacle = False
 
     #Line follow variables
     global previous_error
     previous_error = 0
 
-    global line_integrative
-    line_integrative = 0
+    # global line_integrative
+    # line_integrative = 0
 
     global line_error
     line_error = 0
@@ -50,8 +52,8 @@ def init():
     global dist_error
     dist_error = 0
     
-    global dist_integrative
-    dist_integrative = 0
+    # global dist_integrative
+    # dist_integrative = 0
     
     global dist_previous_error
     dist_previous_error = 0
@@ -60,8 +62,8 @@ def init():
 max_left_speed = 54
 max_right_speed = 60
 
-line_left_speed = 60
-line_right_speed = 58
+line_left_speed = 55#60
+line_right_speed = 53#58
 
 min_left_speed = 37
 min_right_speed = 35
@@ -69,22 +71,22 @@ min_right_speed = 35
 line_kp = 15
 line_kd = 20
 line_ki = 0
+#
+# Distance_MinValue = 10
 
-Distance_MinValue = 10
-
-dist_kp = 40
-dist_kd = 0
+dist_kp = 15
+dist_kd = 20
 dist_ki = 0
 
-dist_left_speed = 50
-dist_right_speed = 48
+dist_left_speed = 45
+dist_right_speed = 43
 
 
 obstacle_list = ["labyrinth-simple", "labyrinth-complex", "ninepins", "trapeze", "chessboard", "wreckage",
                  "stairs", "drone"]
-obstacle_start = ["e5788628", "3fc84729", "30", "40", "50", "60", "70", "80"]
-obstacle_end = [(11, 12, 13, 14), (21, 22, 23, 24), (31, 32, 33, 34), (41, 42, 43, 44), (51, 52, 53, 54),
-                (61, 62, 63, 64), (71, 72, 73, 74), (81, 82, 83, 84)]
+obstacle_start = [("e5788628"), ("3fc84729"), ("30"), ("40"), ("50"), ("60"), ("70"), ("80")]
+obstacle_end_left = [11, 12, 13, 14, 21, 22, 23, 24, 31, 32, 33, 34, 41, 42, 43, 44, 51, 52, 53, 54]
+obstacle_end_right = [61, 62, 63, 64, 71, 72, 73, 74, 81, 82, 83, 84]
 
 
 
@@ -96,8 +98,8 @@ program_switch = 3
 en_shoot = 16
 
 # Ultrasonic sensors
-US_LEFT = 0
-US_CENTER = 1
+US_LEFT = 1
+# US_CENTER = 1
 US_RIGHT = 2
 ultrasonic_triggers = [26, 7, 29]
 ultrasonic_echo = [32, 33, 31]
