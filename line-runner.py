@@ -1,0 +1,182 @@
+import config
+from RPi import GPIO
+from threading import Thread
+import time
+import RFIDReader
+import signal
+import end_program
+import Line
+import PID_final_maze
+import SimpleMaze
+import ComplexMaze
+import Step
+import Ramp
+import Rubble
+import Drone
+import Ninepins
+import Basket
+
+GPIO.cleanup()
+
+#Initialize global variables
+config.init()
+
+GPIO.setmode(GPIO.BOARD)
+
+# Create thread for RFID reading
+rfid = RFIDReader.RFIDReader()
+# rfid = testRFID.RFIDTest()
+rfidThread = Thread(target=rfid.run)
+rfidThread.start()
+
+
+# GPIO.setmode(GPIO.BOARD)
+#Initialize pins
+
+#Program switch
+GPIO.setup(config.program_switch, GPIO.IN)
+
+#Shooter
+GPIO.setup(config.en_shoot, GPIO.OUT)
+
+#Distance sensors
+#Left
+GPIO.setup(config.ultrasonic_triggers[config.US_LEFT], GPIO.OUT)
+GPIO.setup(config.ultrasonic_echo[config.US_LEFT], GPIO.IN)
+#Mid
+# GPIO.setup(config.ultrasonic_triggers[config.US_CENTER], GPIO.OUT)
+# GPIO.setup(config.ultrasonic_echo[config.US_CENTER], GPIO.IN)
+#Right
+GPIO.setup(config.ultrasonic_triggers[config.US_RIGHT], GPIO.OUT)
+GPIO.setup(config.ultrasonic_echo[config.US_RIGHT], GPIO.IN)
+
+#Motor right
+GPIO.setup(config.right_motor_pwm, GPIO.OUT)
+GPIO.setup(config.right_motor_direction, GPIO.OUT)
+GPIO.setup(config.right_motor_direction_inv, GPIO.OUT)
+
+#Motor left
+GPIO.setup(config.left_motor_pwm, GPIO.OUT)
+GPIO.setup(config.left_motor_direction, GPIO.OUT)
+GPIO.setup(config.left_motor_direction_inv, GPIO.OUT)
+
+#Line sensors
+GPIO.setup(config.line_follow_lmax, GPIO.IN)
+GPIO.setup(config.line_follow_lmin, GPIO.IN)
+GPIO.setup(config.line_follow_mid, GPIO.IN)
+GPIO.setup(config.line_follow_rmin, GPIO.IN)
+GPIO.setup(config.line_follow_rmax, GPIO.IN)
+
+
+#Initialize motors
+config.drive_left = GPIO.PWM(config.left_motor_pwm, 100)
+config.drive_right = GPIO.PWM(config.right_motor_pwm, 100)
+
+GPIO.output(config.left_motor_direction, GPIO.HIGH)
+GPIO.output(config.left_motor_direction_inv, GPIO.LOW)
+GPIO.output(config.right_motor_direction, GPIO.HIGH)
+GPIO.output(config.right_motor_direction_inv, GPIO.LOW)
+
+
+# def measure_distance(sensor_pos, debug=False):
+#     complex_distance = 0
+#     retries = 0
+#     pulse_start = 0
+#     pulse_end = 0
+#
+#     for counter in range(3):
+#         GPIO.output(config.ultrasonic_triggers[sensor_pos], GPIO.HIGH)
+#         time.sleep(0.00001)
+#         GPIO.output(config.ultrasonic_triggers[sensor_pos], GPIO.LOW)
+#         while GPIO.input(config.ultrasonic_pins[sensor_pos]) == 0:
+#             pulse_start = time.time()
+#
+#         while GPIO.input(config.ultrasonic_pins[sensor_pos]) == 1:
+#             pulse_end = time.time()
+#
+#         pulse_duration = pulse_end - pulse_start
+#         distance = pulse_duration * 17150
+#         distance = round(distance, 2)
+#
+#         if debug:
+#             print("Sensor : %s Current distance: %s" % (sensor_pos, distance))
+#         if complex_distance == 0:
+#             complex_distance = distance
+#
+#         if distance < complex_distance:
+#             complex_distance = distance
+#         time.sleep(0.05)
+#
+#     return complex_distance
+
+
+# * * * * * * * * * * * * * * * * * * * * * * * * * *
+# Main program
+# * * * * * * * * * * * * * * * * * * * * * * * * * *
+signal.signal(signal.SIGINT, end_program.end_read)
+
+config.walk_speed_left = 40
+config.walk_speed_right = 40
+config.drive_left.start(config.walk_speed_left)
+config.drive_right.start(config.walk_speed_right)
+
+config.LastRFID = " "
+
+# ostacoli
+# config.drive_left.ChangeDutyCycle(60)
+# config.drive_right.ChangeDutyCycle(80)
+
+GPIO.output(config.en_shoot,GPIO.LOW)
+
+while True:
+    if config.LastRFID == "labyrinth-simple":
+        SimpleMaze.SimpleMaze()
+    elif config.LastRFID == "labyrinth-complex":
+        ComplexMaze.ComplexMaze()
+    elif config.LastRFID == "drone":
+        Drone.Drone()
+    elif config.LastRFID == "chessboard":
+        Basket.Basket()
+    elif config.LastRFID == "ninepins":
+        Ninepins.Ninepins()
+    elif config.LastRFID == "trapeze":
+        Ramp.Ramp()
+    elif config.LastRFID == "wreckage":
+        Rubble.Rubble()
+    elif config.LastRFID == "stairs":
+        Step.Step()
+    else:
+        if config.LastRFID == "obstacle_end_left":
+            #muovi leggermente a destra
+            config.LastRFID = "taguscitacentrale"
+        if config.LastRFID == "obstacle_end_right":
+            #muovi leggermente a sinistra
+            config.LastRFID = "taguscitacentrale"
+
+        #segui linea
+        # Line.follow_line(False)
+
+    # FollowMeBaby.FollowMe()
+    # config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+    # config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+
+
+
+
+    # if (GPIO.input(config.program_switch)==0):
+    #     print("low")
+    # if (GPIO.input(config.program_switch)==1):
+    #     print("high")
+    # Distance.follow_distance(debug=True)
+    # print("right",Distance.measure_distance(config.US_RIGHT))
+    # print("left",Distance.measure_distance(config.US_CENTER))
+    # if config.obstacle_number > -1:
+    #     print("Found obstacle", config.obstacle_number)
+    #     print(config.obstacle_number)
+    PID_final_maze.follow_distance(True)
+    config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+    config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+
+
+
+
