@@ -3,4 +3,4 @@ import config
 import time
 
 def Ninepins():
-    ciao = False
+    print("Ninepins")

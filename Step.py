@@ -3,4 +3,4 @@ import config
 import time
 
 def Step():
-    ciao = False
+    print("Steps")

@@ -4,4 +4,4 @@ import time
 
 
 def ComplexMaze():
-    ciao = False
+    print("Complex Maze")

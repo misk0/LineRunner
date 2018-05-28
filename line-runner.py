@@ -141,18 +141,25 @@ while True:
         Ninepins.Ninepins()
     elif config.LastRFID == "trapeze":
         Ramp.Ramp()
+        # config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+        # config.drive_right.ChangeDutyCycle(config.walk_speed_right)
     elif config.LastRFID == "wreckage":
         Rubble.Rubble()
+        # config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+        # config.drive_right.ChangeDutyCycle(config.walk_speed_right)
     elif config.LastRFID == "stairs":
         Step.Step()
     else:
         if config.LastRFID == "obstacle_end_left":
             #muovi leggermente a destra
             config.LastRFID = "taguscitacentrale"
+            print("RFID END LEFT")
         if config.LastRFID == "obstacle_end_right":
             #muovi leggermente a sinistra
             config.LastRFID = "taguscitacentrale"
+            print("RFID END RIGHT")
 
+        print("Line Follower")
         #segui linea
         # Line.follow_line(False)
 

@@ -3,4 +3,4 @@ import config
 import time
 
 def Drone():
-    ciao = False
+    print("Drone")

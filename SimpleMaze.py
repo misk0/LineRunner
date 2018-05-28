@@ -4,4 +4,4 @@ import time
 import Distance
 
 def SimpleMaze():
-    ciao = False
+    print("Simple Maze")
