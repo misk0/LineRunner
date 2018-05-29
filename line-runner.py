@@ -115,8 +115,8 @@ GPIO.output(config.right_motor_direction_inv, GPIO.LOW)
 # * * * * * * * * * * * * * * * * * * * * * * * * * *
 signal.signal(signal.SIGINT, end_program.end_read)
 
-config.walk_speed_left = 40
-config.walk_speed_right = 40
+config.walk_speed_left = 0
+config.walk_speed_right = 0
 config.drive_left.start(config.walk_speed_left)
 config.drive_right.start(config.walk_speed_right)
 
@@ -159,13 +159,13 @@ while True:
             config.LastRFID = "taguscitacentrale"
             print("RFID END RIGHT")
 
-        print("Line Follower")
+        # print("Line Follower")
         #segui linea
         # Line.follow_line(False)
 
     # FollowMeBaby.FollowMe()
-    # config.drive_left.ChangeDutyCycle(config.walk_speed_left)
-    # config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+    #     config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+    #     config.drive_right.ChangeDutyCycle(config.walk_speed_right)
 
 
 
@@ -180,9 +180,9 @@ while True:
     # if config.obstacle_number > -1:
     #     print("Found obstacle", config.obstacle_number)
     #     print(config.obstacle_number)
-    PID_final_maze.follow_distance(True)
-    config.drive_left.ChangeDutyCycle(config.walk_speed_left)
-    config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+    # PID_final_maze.follow_distance(False)
+    # config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+    # config.drive_right.ChangeDutyCycle(config.walk_speed_right)
 
 
 

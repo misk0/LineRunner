@@ -78,8 +78,8 @@ dist_kp = 15
 dist_kd = 20
 dist_ki = 0
 
-dist_left_speed = 45
-dist_right_speed = 43
+dist_left_speed = 50
+dist_right_speed = 48
 
 
 obstacle_list = ["labyrinth-simple", "labyrinth-complex", "ninepins", "trapeze", "chessboard", "wreckage",

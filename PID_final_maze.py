@@ -131,4 +131,4 @@ def follow_distance(debug):
     print("speed left",config.walk_speed_left)
     print("speed right", config.walk_speed_right)
 
-    config.dist_previous_error = config.dist_error
+    # config.dist_previous_error = config.dist_error
