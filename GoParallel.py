@@ -9,7 +9,7 @@ def follow_distance(debug):
     # mid_dist = Distance.measure_distance(config.US_CENTER)
 
     if config.dist_count == 10:
-        config.previous_dist_right = right_dist
+        config.previous_dist_left = left_dist
 
     # print("right",right_dist)
     # print("left",left_dist)
@@ -21,20 +21,20 @@ def follow_distance(debug):
     elif left_dist <= 4:
         config.walk_speed_right = 35
         config.walk_speed_left = 80
-    elif abs(right_dist-config.previous_dist_right) <= 1:
+    elif abs(left_dist-config.previous_dist_left) <= 1:
         config.walk_speed_right = 80
         config.walk_speed_left = 80
-    elif config.previous_dist_right > right_dist:
-        config.walk_speed_right = 80
-        config.walk_speed_left = 60
-    else:
+    elif config.previous_dist_left > left_dist:
         config.walk_speed_right = 60
         config.walk_speed_left = 80
+    else:
+        config.walk_speed_right = 80
+        config.walk_speed_left = 60
 
     if config.dist_count < 9:
         config.dist_count = config.dist_count + 1
     else:
-        config.previous_dist_right = right_dist
+        config.previous_dist_left = left_dist
         config.dist_count = 0
         print("10 misure")
     # else:

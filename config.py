@@ -58,8 +58,8 @@ def init():
     global dist_previous_error
     dist_previous_error = 0
 
-    global previous_dist_right
-    previous_dist_right = 0
+    global previous_dist_left
+    previous_dist_left = 0
 
     global dist_count
     dist_count = 10
