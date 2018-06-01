@@ -13,30 +13,34 @@ def follow_distance(debug):
 
     # print("right",right_dist)
     # print("left",left_dist)
-
-    # if mid_dist > 6:
-    if right_dist <= 4:
-        config.walk_speed_right = 80
-        config.walk_speed_left = 35
-    elif left_dist <= 4:
-        config.walk_speed_right = 35
-        config.walk_speed_left = 80
-    elif abs(left_dist-config.previous_dist_left) <= 1:
-        config.walk_speed_right = 80
-        config.walk_speed_left = 80
-    elif config.previous_dist_left > left_dist:
-        config.walk_speed_right = 60
-        config.walk_speed_left = 80
+    if GPIO.input(config.line_follow_lmax) and GPIO.input(config.line_follow_lmin) and GPIO.input(config.line_follow_mid) and GPIO.input(config.line_follow_rmin) and GPIO.input(config.line_follow_rmax):
+        config.walk_speed_right = 100
+        config.walk_speed_left = 100
     else:
-        config.walk_speed_right = 80
-        config.walk_speed_left = 60
+        # if mid_dist > 6:
+        if right_dist <= 4:
+            config.walk_speed_right = 80
+            config.walk_speed_left = 35
+        elif left_dist <= 4:
+            config.walk_speed_right = 35
+            config.walk_speed_left = 80
+        elif abs(left_dist-config.previous_dist_left) <= 1:
+            config.walk_speed_right = 80
+            config.walk_speed_left = 80
+        elif config.previous_dist_left > left_dist:
+            config.walk_speed_right = 60
+            config.walk_speed_left = 80
+        else:
+            config.walk_speed_right = 80
+            config.walk_speed_left = 60
 
-    if config.dist_count < 9:
-        config.dist_count = config.dist_count + 1
-    else:
-        config.previous_dist_left = left_dist
-        config.dist_count = 0
-        print("10 misure")
+        if config.dist_count < 9:
+            config.dist_count = config.dist_count + 1
+        else:
+            config.previous_dist_left = left_dist
+            config.dist_count = 0
+            print("10 misure")
+
     # else:
     #     config.walk_speed_right = 35
     #     config.walk_speed_left = 80
