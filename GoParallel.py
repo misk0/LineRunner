@@ -6,11 +6,15 @@ import Distance
 def follow_distance(debug):
     right_dist = Distance.measure_distance(config.US_RIGHT)
     left_dist = Distance.measure_distance(config.US_LEFT)
+    # mid_dist = Distance.measure_distance(config.US_CENTER)
+
     if config.dist_count == 10:
         config.previous_dist_right = right_dist
 
     # print("right",right_dist)
     # print("left",left_dist)
+
+    # if mid_dist > 6:
     if right_dist <= 4:
         config.walk_speed_right = 80
         config.walk_speed_left = 35
@@ -33,6 +37,10 @@ def follow_distance(debug):
         config.previous_dist_right = right_dist
         config.dist_count = 0
         print("10 misure")
+    # else:
+    #     config.walk_speed_right = 35
+    #     config.walk_speed_left = 80
+
 
 
     # TotalDist = right_dist+left_dist
