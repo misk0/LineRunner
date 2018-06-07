@@ -21,6 +21,9 @@ def init():
 
     global LastRFID
 
+    global AlreadyDone
+    AlreadyDone = False
+
     # When True line following method should be used to guide robot movement
     # global  follow_the_line
     # follow_the_line = True
@@ -51,7 +54,12 @@ def init():
 
     global dist_error
     dist_error = 0
-    
+
+    global speed
+    speed = 45
+
+    global endMaze
+    endMaze = False
     # global dist_integrative
     # dist_integrative = 0
     
@@ -60,39 +68,60 @@ def init():
 
     global previous_dist_left
     previous_dist_left = 0
+    global pervious_dist_right
+    pervious_dist_right = 0
 
     global dist_count
     dist_count = 10
-    
+
+    global leftDone
+    leftDone = False
+
+    global firstTime
+    firstTime = False
+
+    global endNine
+    endNine = False
+
+    global finale
+    finale = False
+
 # * * * * * * * * * * * *  CONSTANTS * * * * * * * * * * * * * * * *
 max_left_speed = 54
 max_right_speed = 60
 
-line_left_speed = 55#60
-line_right_speed = 53#58
+line_left_speed = 50#60
+line_right_speed =50#58
 
 min_left_speed = 37
 min_right_speed = 35
 
-line_kp = 15
-line_kd = 20
+line_kp = 10
+line_kd = 5
 line_ki = 0
 #
 # Distance_MinValue = 10
-
-dist_kp = 15
-dist_kd = 20
-dist_ki = 0
-
+# simplemaze
+dist_kp = 5
+# dist_kd = 20
+# dist_ki = 0
 dist_left_speed = 50
 dist_right_speed = 48
+
+#steps
+# dist_kp = 15
+# dist_kd = 20
+# dist_ki = 0
+
+# dist_left_speed = 75
+# dist_right_speed = 75
 
 
 obstacle_list = ["labyrinth-simple", "labyrinth-complex", "ninepins", "trapeze", "chessboard", "wreckage",
                  "stairs", "drone"]
-obstacle_start = [("e5788628"), ("3fc84729"), ("30"), ("40"), ("50"), ("60"), ("70"), ("80")]
-obstacle_end_left = [11, 12, 13, 14, 21, 22, 23, 24, 31, 32, 33, 34, 41, 42, 43, 44, 51, 52, 53, 54]
-obstacle_end_right = [61, 62, 63, 64, 71, 72, 73, 74, 81, 82, 83, 84]
+obstacle_start = [("35d68628"), (""), ("c529fb35"), (""), (""), (""), ("b397fa35"), ("")]
+obstacle_end_left = ["84fa4412", "bbc426d3", "95a78628", "25afc928", 21, 22, 23, 24, 31, 32, 33, 34, 41, 42, 43, 44, 51, 52, 53, 54]
+obstacle_end_right = ["8565884", "55e3834", "e5ed884", 64, 71, 72, 73, 74, 81, 82, 83, 84]
 
 
 
@@ -105,7 +134,7 @@ en_shoot = 16
 
 # Ultrasonic sensors
 US_LEFT = 1
-# US_CENTER = 1
+US_CENTER = 0
 US_RIGHT = 2
 ultrasonic_triggers = [26, 7, 29]
 ultrasonic_echo = [32, 33, 31]

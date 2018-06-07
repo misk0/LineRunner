@@ -17,11 +17,12 @@ class RFIDReader:
     def identify_obstacle(self, uid):
         # shift last 4 digits in inverse order
         match = str(hex(uid[0]))[2:4] + str(hex(uid[1]))[2:4] + str(hex(uid[2]))[2:4] + str(hex(uid[3]))[2:4]
-        print(match)
+        # print(match)
 
         for quad in config.obstacle_start:
             if match in quad:
-                config.LastRFID = config.obstacle_list[config.obstacle_end.index(quad)]
+                if config.AlreadyDone == False:
+                    config.LastRFID = config.obstacle_list[config.obstacle_start.index(quad)]
 
         if match in config.obstacle_end_left:
             print("Found obstacle end left")

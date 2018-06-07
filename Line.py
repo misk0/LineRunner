@@ -65,4 +65,4 @@ def follow_line(debug):
         config.walk_speed_right = config.line_right_speed + PIDvalue
 
     config.previous_error = config.line_error
-    time.sleep(0.001)
+    # time.sleep(0.001)
