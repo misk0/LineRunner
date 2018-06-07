@@ -15,7 +15,10 @@ import Rubble
 import Drone
 import Ninepins
 import Basket
-import PID_final_maze
+import NinepinsFinal
+import RampFinal
+import StepsFinal
+import RubbleFinal
 
 GPIO.cleanup()
 
@@ -26,12 +29,9 @@ GPIO.setmode(GPIO.BOARD)
 
 # Create thread for RFID reading
 rfid = RFIDReader.RFIDReader()
-# rfid = testRFID.RFIDTest()
 rfidThread = Thread(target=rfid.run)
 rfidThread.start()
 
-
-# GPIO.setmode(GPIO.BOARD)
 #Initialize pins
 
 #Program switch
@@ -68,7 +68,6 @@ GPIO.setup(config.line_follow_mid, GPIO.IN)
 GPIO.setup(config.line_follow_rmin, GPIO.IN)
 GPIO.setup(config.line_follow_rmax, GPIO.IN)
 
-
 #Initialize motors
 config.drive_left = GPIO.PWM(config.left_motor_pwm, 100)
 config.drive_right = GPIO.PWM(config.right_motor_pwm, 100)
@@ -91,28 +90,22 @@ config.drive_right.start(config.walk_speed_right)
 
 config.LastRFID = " "
 
-# ostacoli
-# config.drive_left.ChangeDutyCycle(60)
-# config.drive_right.ChangeDutyCycle(80)
-
 GPIO.output(config.en_shoot,GPIO.LOW)
 
-
 while True:
-    # config.drive_left.ChangeDutyCycle(60)
-    # config.drive_right.ChangeDutyCycle(60)
-    # time.sleep(0.5)
-    # config.drive_left.ChangeDutyCycle(0)
-    # config.drive_right.ChangeDutyCycle(0)
     if config.LastRFID == "labyrinth-simple":
-        if config.endMaze == True:
+        if config.EndSimpleMaze == True:
             if GPIO.input(config.line_follow_lmax) or GPIO.input(config.line_follow_lmin) or GPIO.input(config.line_follow_mid) or GPIO.input(config.line_follow_rmin) or GPIO.input(config.line_follow_rmax):
                 config.LastRFID = ""
         MAzeNew.follow_distance(False)
-        # config.walk_speed_left = 0
-        # config.walk_speed_right = 0
         config.drive_left.ChangeDutyCycle(config.walk_speed_left)
         config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+    # elif config.LastRFID == "labyrinth-complex":
+    #     ComplexMaze.ComplexMaze()
+    # elif config.LastRFID == "drone":
+    #     Drone.Drone()
+    # elif config.LastRFID == "chessboard":
+    #     Basket.Basket()
     #     # config.AlreadyDone = True
     #     # config.drive_left.ChangeDutyCycle(0)
     #     # config.drive_right.ChangeDutyCycle(0)
@@ -125,27 +118,20 @@ while True:
     #     # config.drive_right.ChangeDutyCycle(40)
     #     # time.sleep(3)
     #     # config.AlreadyDone = False
-    # elif config.LastRFID == "labyrinth-complex":
-    #     ComplexMaze.ComplexMaze()
-    # elif config.LastRFID == "drone":
-    #     Drone.Drone()
-    # elif config.LastRFID == "chessboard":
-    #     Basket.Basket()
     elif config.LastRFID == "ninepins":
-        if config.endMaze == True:
+        if config.EndNinepins == True:
             if GPIO.input(config.line_follow_lmax) or GPIO.input(config.line_follow_lmin) or GPIO.input(config.line_follow_mid) or GPIO.input(config.line_follow_rmin) or GPIO.input(config.line_follow_rmax):
                 config.LastRFID = ""
-                print("trovato")
-        if config.firstTime == False:
-            config.firstTime = True
+        if config.NinepinsFirsTime == False:
+            config.NinepinsFirsTime = True
             config.drive_left.ChangeDutyCycle(60)
             config.drive_right.ChangeDutyCycle(60)
             time.sleep(0.5)
-            TimeFirst = time.time()
-            config.endMaze = True
+            NinepinsTime1 = time.time()
+            config.EndNinepins = True
         # print("time",time.time() - TimeFirst)
-        if config.finale == False:
-            if time.time() - TimeFirst < 0.8:
+        if config.NinepinsFinalPart == False:
+            if time.time() - NinepinsTime1 < 0.8:
                 Ninepins.Ninepins(False)
                 config.drive_left.ChangeDutyCycle(config.walk_speed_left)
                 config.drive_right.ChangeDutyCycle(config.walk_speed_right)
@@ -153,33 +139,81 @@ while True:
                 config.drive_left.ChangeDutyCycle(65)
                 config.drive_right.ChangeDutyCycle(82)
                 time.sleep(2.2)
-                TimeFirst = time.time()
-                config.finale = True
+                NinepinsTime1 = time.time()
+                config.NinepinsFinalPart = True
         else:
-            PID_final_maze.follow_distance(False)
+            NinepinsFinal.follow_distance(False)
             config.drive_left.ChangeDutyCycle(config.walk_speed_left)
             config.drive_right.ChangeDutyCycle(config.walk_speed_right)
 
-    # elif config.LastRFID == "trapeze":
-    #     Ramp.Ramp()
-    #     # config.drive_left.ChangeDutyCycle(config.walk_speed_left)
-    #     # config.drive_right.ChangeDutyCycle(config.walk_speed_right)
-    # elif config.LastRFID == "wreckage":
-    #     Rubble.Rubble()
-    #     # config.drive_left.ChangeDutyCycle(config.walk_speed_left)
-    #     # config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+    elif config.LastRFID == "trapeze":
+        if config.EndRamp == True:
+            if GPIO.input(config.line_follow_lmax) or GPIO.input(config.line_follow_lmin) or GPIO.input(
+                    config.line_follow_mid) or GPIO.input(config.line_follow_rmin) or GPIO.input(
+                    config.line_follow_rmax):
+                config.LastRFID = ""
+        if config.RampFirstTime == False:
+            RampTime1 = time.time()
+            config.RampFirstTime = True
+        print("time",time.time() - RampTime1)
+        if time.time() - RampTime1 <= 2.5:
+            Ramp.Ramp(False)
+            config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+            config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+        elif time.time() - RampTime1 > 2.5 and time.time() - RampTime1 <= 4:
+            config.drive_left.ChangeDutyCycle(60)
+            config.drive_right.ChangeDutyCycle(80)
+        else:
+            RampFinal.follow_distance(False)
+            config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+            config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+            config.EndRamp = True
+
+    elif config.LastRFID == "wreckage":
+        if config.EndRubble == True:
+            if GPIO.input(config.line_follow_lmax) or GPIO.input(config.line_follow_lmin) or GPIO.input(
+                    config.line_follow_mid) or GPIO.input(config.line_follow_rmin) or GPIO.input(
+                    config.line_follow_rmax):
+                config.LastRFID = ""
+        if config.RubbleFirstTime == False:
+            RubbleTime1 = time.time()
+            config.RubbleFirstTime = True
+        print("time",time.time() - RampTime1)
+        if time.time() - RubbleTime1 <= 2.5:
+            Rubble.Rubble(False)
+            config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+            config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+        elif time.time() - RubbleTime1 > 2.5 and time.time() - RubbleTime1 <= 4:
+            config.drive_left.ChangeDutyCycle(60)
+            config.drive_right.ChangeDutyCycle(80)
+        else:
+            RubbleFinal.follow_distance(False)
+            config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+            config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+            config.EndRubble = True
+
     elif config.LastRFID == "stairs":
-        if config.firstTime == False:
-            TimeFirst = time.time()
-            config.firstTime = True
-        print("time",time.time() - TimeFirst)
-        if time.time() - TimeFirst < 2.5:
+        if config.EndSteps == True:
+            if GPIO.input(config.line_follow_lmax) or GPIO.input(config.line_follow_lmin) or GPIO.input(
+                    config.line_follow_mid) or GPIO.input(config.line_follow_rmin) or GPIO.input(
+                    config.line_follow_rmax):
+                config.LastRFID = ""
+        if config.StepsFirstTime == False:
+            StepsTime1 = time.time()
+            config.StepsFirstTime = True
+        print("time",time.time() - StepsTime1)
+        if time.time() - StepsTime1 <= 2.5:
             Step.Step(False)
             config.drive_left.ChangeDutyCycle(config.walk_speed_left)
             config.drive_right.ChangeDutyCycle(config.walk_speed_right)
-        else:
+        elif time.time() - StepsTime1 > 2.5 and time.time() - StepsTime1 <= 4:
             config.drive_left.ChangeDutyCycle(60)
             config.drive_right.ChangeDutyCycle(80)
+        else:
+            StepsFinal.follow_distance(False)
+            config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+            config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+            config.EndSteps = True
         # PID_final_maze.follow_distance(False)
     else:
     #     if config.LastRFID == "obstacle_end_left":

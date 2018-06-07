@@ -1,112 +1,245 @@
 # Variables
 def init():
-    # when True robot should move
-    # global walk_running
-    # walk_running = True
 
     # Automatic means motors should be running continuously
     # When False, encoder should be read and tracker should move only with certain number of rotation
-    global walk_mode_automatic
-    walk_mode_automatic = True
+    # global walk_mode_automatic
+    # walk_mode_automatic = True
 
     # Speed of left tracker
     global walk_speed_left
-    walk_speed_left = max_left_speed
+    walk_speed_left = 60
     # Speed of right tracker
     global walk_speed_right
-    walk_speed_right = max_right_speed
+    walk_speed_right = 60
 
     global drive_left
     global drive_right
 
     global LastRFID
 
-    global AlreadyDone
-    AlreadyDone = False
 
-    # When True line following method should be used to guide robot movement
-    # global  follow_the_line
-    # follow_the_line = True
+    #SimpleMaze
+    global SimpleMazeCount
+    SimpleMazeCount = 10
 
-    # Value indicate which obstacle is recognized. Usually set by RFID sensor
-    # 1 - Simple Labyrinth
-    # 2 - Complex Labyrinth
-    # 3 - Ninepins (birilli)
-    # 4 - Trapeze
-    # 5 - Chessboard
-    # 6 - Wreckage (macerie)
-    # 7 - Stairs
-    # 8 - Drone
-    # global obstacle_number
-    # obstacle_number = -1
-    # global inside_obstacle
-    # inside_obstacle = False
+    global PreviousDistLeft_SimpleMaze
+    PreviousDistLeft_SimpleMaze = 0
 
-    #Line follow variables
+    global SimpleMazeSpeed
+    SimpleMazeSpeed = 45
+
+    global EndSimpleMaze
+    EndSimpleMaze = False
+
+    global SimpleMazeLeftDone
+    SimpleMazeLeftDone = False
+
+    global SimpleMazeError
+    SimpleMazeError = 0
+
+    global SimpleMazePrevError
+    SimpleMazePrevError = 0
+
+    #Ninepins
+    global EndNinepins
+    EndNinepins = False
+
+    global NinepinsFirsTime
+    NinepinsFirsTime = False
+
+    global NinepinsFinalPart
+    NinepinsFinalPart = False
+
+    global NinepinsFinalError
+    NinepinsFinalError = 0
+
+    global NinepinsFinalPrevError
+    NinepinsFinalPrevError = 0
+
+    global NinepinsCount
+    NinepinsCount = 10
+
+    global NinepinsPrevLeft
+    NinepinsPrevLeft = 0
+
+    global NinepinsError
+    NinepinsError = 0
+
+    global NinepinsPrevError
+    NinepinsPrevError = 0
+
+    #Steps
+    global StepsFirstTime
+    StepsFirstTime = False
+
+    global EndSTeps
+    EndSTeps = False
+
+    global StepCount
+    StepCount = 10
+
+    global StepPrevRight
+    StepPrevRight = 0
+
+    global StepError
+    StepError = 0
+
+    global StepsFinalError
+    StepsFinalError = 0
+
+    global StepsFinalPrevError
+    StepsFinalPrevError = 0
+
+    #Line
+    global line_error
+    line_error = 0
+
     global previous_error
     previous_error = 0
+
+    #Ramp
+    global EndRamp
+    EndRamp = False
+
+    global RampFirstTime
+    RampFirstTime = False
+
+    global RampCount
+    RampCount = 10
+
+    global RampPrevRight
+    RampPrevRight = 0
+
+    global RampError
+    RampError = 0
+
+    global RampFinalError
+    RampFinalError = 0
+
+    global RampFinalPrevError
+    RampFinalPrevError = 0
+
+    #Rubble
+    global EndRubble
+    EndRubble = False
+
+    global RubbleFirstTime
+    RubbleFirstTime = False
+
+    global RubbleCount
+    RubbleCount = 10
+
+    global RubblePrevRight
+    RubblePrevRight = 0
+
+    global RubbleError
+    RubbleError = 0
+
+    global RubbleFinalError
+    RubbleFinalError = 0
+
+    global RubbleFinalPrevError
+    RubbleFinalPrevError = 0
+
+
+
+
+
+    # global AlreadyDone
+    # AlreadyDone = False
+
+    #Line follow variables
+
 
     # global line_integrative
     # line_integrative = 0
 
-    global line_error
-    line_error = 0
 
-    global dist_error
-    dist_error = 0
 
-    global speed
-    speed = 45
+    # global dist_error
+    # dist_error = 0
 
-    global endMaze
-    endMaze = False
+    # global speed
+    # speed = 45
+
+
     # global dist_integrative
     # dist_integrative = 0
     
-    global dist_previous_error
-    dist_previous_error = 0
+    # global dist_previous_error
+    # dist_previous_error = 0
 
-    global previous_dist_left
-    previous_dist_left = 0
-    global pervious_dist_right
-    pervious_dist_right = 0
+    # global previous_dist_left
+    # previous_dist_left = 0
+    # global pervious_dist_right
+    # pervious_dist_right = 0
 
-    global dist_count
-    dist_count = 10
+    # global dist_count
+    # dist_count = 10
 
-    global leftDone
-    leftDone = False
 
-    global firstTime
-    firstTime = False
+    # global endNine
+    # endNine = False
 
-    global endNine
-    endNine = False
 
-    global finale
-    finale = False
 
 # * * * * * * * * * * * *  CONSTANTS * * * * * * * * * * * * * * * *
-max_left_speed = 54
-max_right_speed = 60
+#Ninepins
+NinepinsFinalLeftSpeed = 50
+NinepinsFinalRightSpeed = 50
+
+NinepinsLeftSpeed = 50
+NinepinsRightSpeed = 50
+
+#Steps
+StepLeftSpeed = 50
+StepRightSpeed = 50
+
+StepsFinalLeftSpeed = 50
+StepsFinalRightSpeed = 50
+
+#Line
+line_kp = 10
+line_kd = 5
+# line_ki = 0
 
 line_left_speed = 50#60
 line_right_speed =50#58
 
-min_left_speed = 37
-min_right_speed = 35
+#Ramp
+RampLeftSpeed = 50
+RampRightSpeed = 50
 
-line_kp = 10
-line_kd = 5
-line_ki = 0
+RampFinalLeftSpeed = 50
+RampFinalRightSpeed = 50
+
+#Rubble
+RubbleLeftSpeed = 50
+RubbleRightSpeed = 50
+
+RubbleFinalLeftSpeed = 50
+RubbleFinalRightSpeed = 50
+
+
+
+# max_left_speed = 54
+# max_right_speed = 60
+
+
+
+# min_left_speed = 37
+# min_right_speed = 35
+
+
 #
 # Distance_MinValue = 10
 # simplemaze
-dist_kp = 5
+# dist_kp = 5
 # dist_kd = 20
 # dist_ki = 0
-dist_left_speed = 50
-dist_right_speed = 48
+# dist_left_speed = 50
+# dist_right_speed = 48
 
 #steps
 # dist_kp = 15

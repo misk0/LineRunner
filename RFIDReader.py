@@ -21,16 +21,16 @@ class RFIDReader:
 
         for quad in config.obstacle_start:
             if match in quad:
-                if config.AlreadyDone == False:
-                    config.LastRFID = config.obstacle_list[config.obstacle_start.index(quad)]
+                # if config.AlreadyDone == False:
+                config.LastRFID = config.obstacle_list[config.obstacle_start.index(quad)]
 
-        if match in config.obstacle_end_left:
-            print("Found obstacle end left")
-            config.LastRFID = "obstacle_end_left"
+        # if match in config.obstacle_end_left:
+        #     print("Found obstacle end left")
+        #     config.LastRFID = "obstacle_end_left"
 
-        if match in config.obstacle_end_right:
-            print("Found obstacle end right")
-            config.LastRFID = "obstacle_end_right"
+        # if match in config.obstacle_end_right:
+        #     print("Found obstacle end right")
+        #     config.LastRFID = "obstacle_end_right"
 
 
     def run(self):
