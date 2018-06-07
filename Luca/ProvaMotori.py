@@ -3,12 +3,9 @@ from RPi import GPIO
 import time
 import signal
 import end_program
-import GoParallel
+from Luca import GoParallel, PID_final_maze, provaMaze
 import MAzeNew
-import PID_final_maze
 import Distance
-import provaMaze
-
 
 #Initialize global variables
 config.init()

@@ -6,7 +6,6 @@ import RFIDReader
 import signal
 import end_program
 import Line
-import MAzeNew
 import SimpleMaze
 import ComplexMaze
 import Step
@@ -97,7 +96,7 @@ while True:
         if config.EndSimpleMaze == True:
             if GPIO.input(config.line_follow_lmax) or GPIO.input(config.line_follow_lmin) or GPIO.input(config.line_follow_mid) or GPIO.input(config.line_follow_rmin) or GPIO.input(config.line_follow_rmax):
                 config.LastRFID = ""
-        MAzeNew.follow_distance(False)
+        SimpleMaze.follow_distance(False)
         config.drive_left.ChangeDutyCycle(config.walk_speed_left)
         config.drive_right.ChangeDutyCycle(config.walk_speed_right)
     # elif config.LastRFID == "labyrinth-complex":
