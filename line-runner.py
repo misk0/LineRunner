@@ -82,8 +82,8 @@ GPIO.output(config.right_motor_direction_inv, GPIO.LOW)
 # * * * * * * * * * * * * * * * * * * * * * * * * * *
 signal.signal(signal.SIGINT, end_program.end_read)
 
-config.walk_speed_left = 40
-config.walk_speed_right = 40
+config.walk_speed_left = 0#40
+config.walk_speed_right = 0#40
 config.drive_left.start(config.walk_speed_left)
 config.drive_right.start(config.walk_speed_right)
 
@@ -101,9 +101,24 @@ while True:
         config.drive_right.ChangeDutyCycle(config.walk_speed_right)
     # elif config.LastRFID == "labyrinth-complex":
     #     ComplexMaze.ComplexMaze()
-    # elif config.LastRFID == "drone":
+    elif config.LastRFID == "drone":
+        config.drive_left.ChangeDutyCycle(100)
+        config.drive_right.ChangeDutyCycle(60)
+        time.sleep(2)
+        config.LastRFID = ""
     #     Drone.Drone()
-    # elif config.LastRFID == "chessboard":
+    elif config.LastRFID == "chessboard":
+        config.drive_left.ChangeDutyCycle(0)
+        config.drive_right.ChangeDutyCycle(0)
+        GPIO.output(config.en_shoot, GPIO.HIGH)
+        time.sleep(1)
+        GPIO.output(config.en_shoot, GPIO.LOW)
+        config.drive_left.ChangeDutyCycle(100)
+        config.drive_right.ChangeDutyCycle(60)
+        time.sleep(1)
+        config.drive_left.ChangeDutyCycle(65)
+        config.drive_right.ChangeDutyCycle(82)
+        config.LastRFID = ""
     #     Basket.Basket()
     #     # config.AlreadyDone = True
     #     # config.drive_left.ChangeDutyCycle(0)
@@ -154,8 +169,11 @@ while True:
         if config.RampFirstTime == False:
             RampTime1 = time.time()
             config.RampFirstTime = True
-        print("time",time.time() - RampTime1)
-        if time.time() - RampTime1 <= 2.5:
+        # print("time",time.time() - RampTime1)
+        if time.time() - RampTime1 <= 0.5:
+            config.drive_left.ChangeDutyCycle(60)
+            config.drive_right.ChangeDutyCycle(80)
+        elif time.time() - RampTime1 <= 2.5:
             Ramp.Ramp(False)
             config.drive_left.ChangeDutyCycle(config.walk_speed_left)
             config.drive_right.ChangeDutyCycle(config.walk_speed_right)
@@ -177,12 +195,8 @@ while True:
         if config.RubbleFirstTime == False:
             RubbleTime1 = time.time()
             config.RubbleFirstTime = True
-        print("time",time.time() - RampTime1)
-        if time.time() - RubbleTime1 <= 2.5:
-            Rubble.Rubble(False)
-            config.drive_left.ChangeDutyCycle(config.walk_speed_left)
-            config.drive_right.ChangeDutyCycle(config.walk_speed_right)
-        elif time.time() - RubbleTime1 > 2.5 and time.time() - RubbleTime1 <= 4:
+
+        if time.time() - RubbleTime1 <= 3:
             config.drive_left.ChangeDutyCycle(60)
             config.drive_right.ChangeDutyCycle(80)
         else:
@@ -200,12 +214,12 @@ while True:
         if config.StepsFirstTime == False:
             StepsTime1 = time.time()
             config.StepsFirstTime = True
-        print("time",time.time() - StepsTime1)
+        # print("time",time.time() - StepsTime1)
         if time.time() - StepsTime1 <= 2.5:
             Step.Step(False)
             config.drive_left.ChangeDutyCycle(config.walk_speed_left)
             config.drive_right.ChangeDutyCycle(config.walk_speed_right)
-        elif time.time() - StepsTime1 > 2.5 and time.time() - StepsTime1 <= 4:
+        elif time.time() - StepsTime1 > 2.5 and time.time() - StepsTime1 <= 6.5:
             config.drive_left.ChangeDutyCycle(60)
             config.drive_right.ChangeDutyCycle(80)
         else:
@@ -230,10 +244,10 @@ while True:
     # Rubble.Rubble()
 
     # FollowMeBaby.FollowMe()
-        config.drive_left.ChangeDutyCycle(config.walk_speed_left)
-        config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+    #     config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+    #     config.drive_right.ChangeDutyCycle(config.walk_speed_right)
         # print(config.walk_speed_left)
-        time.sleep(0.1)
+        time.sleep(0.5)#time.sleep(0.1)
         config.drive_left.ChangeDutyCycle(0)
         config.drive_right.ChangeDutyCycle(0)
 

@@ -4,7 +4,7 @@ import time
 import signal
 import end_program
 from Luca import GoParallel, PID_final_maze, provaMaze
-import MAzeNew
+# import MAzeNew
 import Distance
 
 #Initialize global variables
@@ -69,8 +69,8 @@ GPIO.output(config.en_shoot,GPIO.LOW)
 
 # config.walk_speed_left = 0
 # config.walk_speed_right = 0
-config.drive_left.start(40)
-config.drive_right.start(40)
+config.drive_left.start(60)
+config.drive_right.start(80)
 
 #provare FW
 # config.drive_left.ChangeDutyCycle(65)
@@ -110,10 +110,10 @@ config.drive_right.start(40)
 # se c'è muro Sx e anche front -> gira molto destra
 # se non c'è muro SX e non front -> gira un po' sinistra
 # se non c'è muro SX ma c'è front -> gira molto destra
-
+RubbleTime1 = time.time()
 
 while True:
-    ciao = 1
+    print(time.time() - RubbleTime1)
     # PID_final_maze.follow_distance(True)
     # MAzeNew.follow_distance(False)
     # config.drive_left.ChangeDutyCycle(config.walk_speed_left)

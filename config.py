@@ -200,12 +200,12 @@ StepsFinalLeftSpeed = 50
 StepsFinalRightSpeed = 50
 
 #Line
-line_kp = 10
-line_kd = 5
+line_kp = 25
+line_kd = 15
 # line_ki = 0
 
-line_left_speed = 50#60
-line_right_speed =50#58
+line_left_speed = 45#60
+line_right_speed = 65#58
 
 #Ramp
 RampLeftSpeed = 50
@@ -228,8 +228,8 @@ RubbleFinalRightSpeed = 50
 
 
 
-# min_left_speed = 37
-# min_right_speed = 35
+min_left_speed = 37
+min_right_speed = 35
 
 
 #
@@ -252,7 +252,7 @@ RubbleFinalRightSpeed = 50
 
 obstacle_list = ["labyrinth-simple", "labyrinth-complex", "ninepins", "trapeze", "chessboard", "wreckage",
                  "stairs", "drone"]
-obstacle_start = [("35d68628"), (""), ("c529fb35"), (""), (""), (""), ("b397fa35"), ("")]
+obstacle_start = [("35d68628"), (""), ("c529fb35"), ("b397fa35"), ("b715665"), ("e7f6f735"), ("b397fa35"), ("c7c7d65")]
 obstacle_end_left = ["84fa4412", "bbc426d3", "95a78628", "25afc928", 21, 22, 23, 24, 31, 32, 33, 34, 41, 42, 43, 44, 51, 52, 53, 54]
 obstacle_end_right = ["8565884", "55e3834", "e5ed884", 64, 71, 72, 73, 74, 81, 82, 83, 84]
 

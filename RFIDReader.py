@@ -27,7 +27,7 @@ class RFIDReader:
         # if match in config.obstacle_end_left:
         #     print("Found obstacle end left")
         #     config.LastRFID = "obstacle_end_left"
-
+        #
         # if match in config.obstacle_end_right:
         #     print("Found obstacle end right")
         #     config.LastRFID = "obstacle_end_right"
