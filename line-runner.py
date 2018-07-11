@@ -18,6 +18,7 @@ import NinepinsFinal
 import RampFinal
 import StepsFinal
 import RubbleFinal
+import NewLine
 
 GPIO.cleanup()
 
@@ -82,8 +83,8 @@ GPIO.output(config.right_motor_direction_inv, GPIO.LOW)
 # * * * * * * * * * * * * * * * * * * * * * * * * * *
 signal.signal(signal.SIGINT, end_program.end_read)
 
-config.walk_speed_left = 0#40
-config.walk_speed_right = 0#40
+config.walk_speed_left = 40
+config.walk_speed_right = 40
 config.drive_left.start(config.walk_speed_left)
 config.drive_right.start(config.walk_speed_right)
 
@@ -240,16 +241,17 @@ while True:
 
         # print("Line Follower")
         #segui linea
-        Line.follow_line(False)
+        #Line.follow_line(False)
+        NewLine.follow_line(False)
     # Rubble.Rubble()
 
     # FollowMeBaby.FollowMe()
-    #     config.drive_left.ChangeDutyCycle(config.walk_speed_left)
-    #     config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+        config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+        config.drive_right.ChangeDutyCycle(config.walk_speed_right)
         # print(config.walk_speed_left)
-        time.sleep(0.5)#time.sleep(0.1)
-        config.drive_left.ChangeDutyCycle(0)
-        config.drive_right.ChangeDutyCycle(0)
+        # time.sleep(0.5)#time.sleep(0.1)
+        # config.drive_left.ChangeDutyCycle(0)
+        # config.drive_right.ChangeDutyCycle(0)
 
 
 

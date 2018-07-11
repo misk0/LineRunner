@@ -200,8 +200,10 @@ StepsFinalLeftSpeed = 50
 StepsFinalRightSpeed = 50
 
 #Line
-line_kp = 25
-line_kd = 15
+# line_kp = 25
+# line_kd = 15
+line_kp = 10
+line_kd = 0
 # line_ki = 0
 
 line_left_speed = 45#60
