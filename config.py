@@ -18,6 +18,9 @@ def init():
 
     global LastRFID
 
+    #servo
+    global servo_pwm
+
 
     #SimpleMaze
     global SimpleMazeCount
@@ -202,8 +205,8 @@ StepsFinalRightSpeed = 50
 #Line
 # line_kp = 25
 # line_kd = 15
-line_kp = 10
-line_kd = 0
+line_kp = 15
+line_kd = 5
 # line_ki = 0
 
 line_left_speed = 45#60
@@ -263,8 +266,8 @@ obstacle_end_right = ["8565884", "55e3834", "e5ed884", 64, 71, 72, 73, 74, 81, 8
 # PIN configuration - PIN number
 
 #miscellaneous
-program_switch = 3
-
+servo = 3
+calib = 5
 en_shoot = 16
 
 # Ultrasonic sensors

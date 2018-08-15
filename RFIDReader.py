@@ -43,7 +43,7 @@ class RFIDReader:
 
                 (error, uid) = self.rdr.anticoll()
                 if not error:
-                    # print(uid)
+                    print(uid)
                     self.identify_obstacle(uid)
                     #time.sleep(0.2)
         finally:

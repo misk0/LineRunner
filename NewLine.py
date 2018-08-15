@@ -8,11 +8,11 @@ def follow_line(debug):
     middle_value = GPIO.input(config.line_follow_mid)
     right_min_value = GPIO.input(config.line_follow_rmin)
     right_max_value = GPIO.input(config.line_follow_rmax)
-    print("left_max",left_max_value)
-    print("left_min", left_min_value)
-    print("mid", middle_value)
-    print("right_min", right_min_value)
-    print("right_max", right_max_value)
+    # print("left_max",left_max_value)
+    # print("left_min", left_min_value)
+    # print("mid", middle_value)
+    # print("right_min", right_min_value)
+    # print("right_max", right_max_value)
 
     if left_max_value == 0 and left_min_value == 0 and middle_value == 0 and right_min_value == 0 and right_max_value == 1:
         config.line_error = -3

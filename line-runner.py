@@ -20,7 +20,7 @@ import StepsFinal
 import RubbleFinal
 import NewLine
 
-GPIO.cleanup()
+# GPIO.cleanup()
 
 #Initialize global variables
 config.init()
@@ -34,11 +34,14 @@ rfidThread.start()
 
 #Initialize pins
 
-#Program switch
-GPIO.setup(config.program_switch, GPIO.IN)
-
 #Shooter
 GPIO.setup(config.en_shoot, GPIO.OUT)
+
+#servo
+GPIO.setup(config.servo, GPIO.OUT)
+
+#calibration
+GPIO.setup(config.calib, GPIO.OUT)
 
 #Distance sensors
 #Left
@@ -77,11 +80,19 @@ GPIO.output(config.left_motor_direction_inv, GPIO.LOW)
 GPIO.output(config.right_motor_direction, GPIO.HIGH)
 GPIO.output(config.right_motor_direction_inv, GPIO.LOW)
 
+#Initialize servo and calibration
+# config.servo_pwm = GPIO.PWM(config.servo, 50)
+# config.servo_pwm.start(2)#2min
+# time.sleep(1)
+# config.servo_pwm.stop()
+
 
 # * * * * * * * * * * * * * * * * * * * * * * * * * *
 # Main program
 # * * * * * * * * * * * * * * * * * * * * * * * * * *
 signal.signal(signal.SIGINT, end_program.end_read)
+
+GPIO.output(config.calib, GPIO.LOW)
 
 config.walk_speed_left = 40
 config.walk_speed_right = 40
@@ -242,16 +253,17 @@ while True:
         # print("Line Follower")
         #segui linea
         #Line.follow_line(False)
-        NewLine.follow_line(False)
+        NewLine.follow_line(False) #da usare
+        # ciao = 0
     # Rubble.Rubble()
 
     # FollowMeBaby.FollowMe()
         config.drive_left.ChangeDutyCycle(config.walk_speed_left)
         config.drive_right.ChangeDutyCycle(config.walk_speed_right)
         # print(config.walk_speed_left)
-        # time.sleep(0.5)#time.sleep(0.1)
-        # config.drive_left.ChangeDutyCycle(0)
-        # config.drive_right.ChangeDutyCycle(0)
+        time.sleep(0.2)#time.sleep(0.1)
+        config.drive_left.ChangeDutyCycle(0)
+        config.drive_right.ChangeDutyCycle(0)
 
 
 
