@@ -81,10 +81,10 @@ GPIO.output(config.right_motor_direction, GPIO.HIGH)
 GPIO.output(config.right_motor_direction_inv, GPIO.LOW)
 
 #Initialize servo and calibration
-# config.servo_pwm = GPIO.PWM(config.servo, 50)
-# config.servo_pwm.start(2)#2min
-# time.sleep(1)
-# config.servo_pwm.stop()
+config.servo_pwm = GPIO.PWM(config.servo, 50)
+config.servo_pwm.start(2)#2min 11max
+time.sleep(1)
+config.servo_pwm.stop()
 
 
 # * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -94,8 +94,8 @@ signal.signal(signal.SIGINT, end_program.end_read)
 
 GPIO.output(config.calib, GPIO.LOW)
 
-config.walk_speed_left = 40
-config.walk_speed_right = 40
+config.walk_speed_left = 0
+config.walk_speed_right = 0
 config.drive_left.start(config.walk_speed_left)
 config.drive_right.start(config.walk_speed_right)
 
@@ -179,6 +179,9 @@ while True:
                     config.line_follow_rmax):
                 config.LastRFID = ""
         if config.RampFirstTime == False:
+            config.servo_pwm.start(11)  # 2min 11max
+            time.sleep(1)
+            config.servo_pwm.stop()
             RampTime1 = time.time()
             config.RampFirstTime = True
         # print("time",time.time() - RampTime1)
@@ -193,6 +196,11 @@ while True:
             config.drive_left.ChangeDutyCycle(60)
             config.drive_right.ChangeDutyCycle(80)
         else:
+            if config.RampEndedFirstTime == True:
+                config.servo_pwm.start(2)  # 2min 11max
+                time.sleep(1)
+                config.servo_pwm.stop()
+                config.RampEndedFirstTime = False
             RampFinal.follow_distance(False)
             config.drive_left.ChangeDutyCycle(config.walk_speed_left)
             config.drive_right.ChangeDutyCycle(config.walk_speed_right)
@@ -205,6 +213,9 @@ while True:
                     config.line_follow_rmax):
                 config.LastRFID = ""
         if config.RubbleFirstTime == False:
+            config.servo_pwm.start(11)  # 2min 11max
+            time.sleep(1)
+            config.servo_pwm.stop()
             RubbleTime1 = time.time()
             config.RubbleFirstTime = True
 
@@ -212,6 +223,11 @@ while True:
             config.drive_left.ChangeDutyCycle(60)
             config.drive_right.ChangeDutyCycle(80)
         else:
+            if config.RubbleEndedFirstTime == True:
+                config.servo_pwm.start(2)  # 2min 11max
+                time.sleep(1)
+                config.servo_pwm.stop()
+                config.RubbleEndedFirstTime = False
             RubbleFinal.follow_distance(False)
             config.drive_left.ChangeDutyCycle(config.walk_speed_left)
             config.drive_right.ChangeDutyCycle(config.walk_speed_right)
@@ -224,6 +240,9 @@ while True:
                     config.line_follow_rmax):
                 config.LastRFID = ""
         if config.StepsFirstTime == False:
+            config.servo_pwm.start(11)  # 2min 11max
+            time.sleep(1)
+            config.servo_pwm.stop()
             StepsTime1 = time.time()
             config.StepsFirstTime = True
         # print("time",time.time() - StepsTime1)
@@ -235,6 +254,11 @@ while True:
             config.drive_left.ChangeDutyCycle(60)
             config.drive_right.ChangeDutyCycle(80)
         else:
+            if config.StepsEndedFirstTime == True:
+                config.servo_pwm.start(2)  # 2min 11max
+                time.sleep(1)
+                config.servo_pwm.stop()
+                config.StepsEndedFirstTime = False
             StepsFinal.follow_distance(False)
             config.drive_left.ChangeDutyCycle(config.walk_speed_left)
             config.drive_right.ChangeDutyCycle(config.walk_speed_right)
@@ -252,19 +276,21 @@ while True:
 
         # print("Line Follower")
         #segui linea
-        #Line.follow_line(False)
-        NewLine.follow_line(False) #da usare
+        Line.follow_line(False)
+        # NewLine.follow_line(False) #da usare
         # ciao = 0
     # Rubble.Rubble()
 
     # FollowMeBaby.FollowMe()
-        config.drive_left.ChangeDutyCycle(config.walk_speed_left)
-        config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+    #     config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+    #     config.drive_right.ChangeDutyCycle(config.walk_speed_right)
         # print(config.walk_speed_left)
-        time.sleep(0.2)#time.sleep(0.1)
+        time.sleep(0.07)#time.sleep(0.1)
         config.drive_left.ChangeDutyCycle(0)
         config.drive_right.ChangeDutyCycle(0)
-
+        # time.sleep(0.1)
+        # config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+        # config.drive_right.ChangeDutyCycle(config.walk_speed_right)
 
 
 

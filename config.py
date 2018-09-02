@@ -76,6 +76,9 @@ def init():
     global StepsFirstTime
     StepsFirstTime = False
 
+    global StepsEndedFirstTime
+    StepsEndedFirstTime = True
+
     global EndSTeps
     EndSTeps = False
 
@@ -108,6 +111,9 @@ def init():
     global RampFirstTime
     RampFirstTime = False
 
+    global RampEndedFirstTime
+    RampEndedFirstTime = True
+
     global RampCount
     RampCount = 10
 
@@ -129,6 +135,9 @@ def init():
 
     global RubbleFirstTime
     RubbleFirstTime = False
+
+    global RubbleEndedFirstTime
+    RubbleEndedFirstTime = True
 
     global RubbleCount
     RubbleCount = 10
@@ -205,12 +214,12 @@ StepsFinalRightSpeed = 50
 #Line
 # line_kp = 25
 # line_kd = 15
-line_kp = 15
-line_kd = 5
+line_kp = 11
+line_kd = 4
 # line_ki = 0
 
 line_left_speed = 45#60
-line_right_speed = 65#58
+line_right_speed = 45#58
 
 #Ramp
 RampLeftSpeed = 50

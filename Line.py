@@ -12,6 +12,10 @@ def follow_line(debug):
 
     if left_max_value == 0 and left_min_value == 0 and middle_value == 0 and right_min_value == 0 and right_max_value == 1:
         config.line_error = -4
+    elif left_max_value == 0 and left_min_value == 0 and middle_value == 1 and right_min_value == 1 and right_max_value == 1:
+        config.line_error = -4
+    elif left_max_value == 0 and left_min_value == 1 and middle_value == 1 and right_min_value == 1 and right_max_value == 1:
+        config.line_error = -4
         # config.drive_left.ChangeDutyCycle(0)
         # config.drive_right.ChangeDutyCycle(0)
         # GPIO.output(config.left_motor_direction, GPIO.HIGH)
@@ -45,6 +49,10 @@ def follow_line(debug):
         config.line_error = 0
         if debug:
             print("mid")
+    elif left_max_value == 0 and left_min_value == 1 and middle_value == 1 and right_min_value == 1 and right_max_value == 0:
+        config.line_error = 0
+        if debug:
+            print("mid")
     elif left_max_value == 0 and left_min_value == 1 and middle_value == 1 and right_min_value == 0 and right_max_value == 0:
         config.line_error = 1
         if debug:
@@ -59,23 +67,12 @@ def follow_line(debug):
             print("quasitroppo sx")
     elif left_max_value == 1 and left_min_value == 0 and middle_value == 0 and right_min_value == 0 and right_max_value == 0:
         config.line_error = 4
-        # config.drive_left.ChangeDutyCycle(0)
-        # config.drive_right.ChangeDutyCycle(0)
-        # GPIO.output(config.left_motor_direction, GPIO.LOW)
-        # GPIO.output(config.left_motor_direction_inv, GPIO.HIGH)
-        # GPIO.output(config.right_motor_direction, GPIO.HIGH)
-        # GPIO.output(config.right_motor_direction_inv, GPIO.LOW)
-        # config.drive_left.ChangeDutyCycle(80)
-        # config.drive_right.ChangeDutyCycle(80)
-        # time.sleep(0.3)  # time needed to turn 90° left
-        # config.drive_left.ChangeDutyCycle(0)
-        # config.drive_right.ChangeDutyCycle(0)
-        # GPIO.output(config.left_motor_direction, GPIO.HIGH)
-        # GPIO.output(config.left_motor_direction_inv, GPIO.LOW)
-        # GPIO.output(config.right_motor_direction, GPIO.HIGH)
-        # GPIO.output(config.right_motor_direction_inv, GPIO.LOW)
         if debug:
             print("troppo dx")
+    elif left_max_value == 1 and left_min_value == 1 and middle_value == 1 and right_min_value == 0 and right_max_value == 0:
+        config.line_error = 4
+    elif left_max_value == 1 and left_min_value == 1 and middle_value == 1 and right_min_value == 1 and right_max_value == 0:
+        config.line_error = 4
 
     P = config.line_error
     # config.line_integrative = config.line_integrative + config.line_error

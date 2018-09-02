@@ -13,16 +13,23 @@ def follow_line(debug):
     # print("mid", middle_value)
     # print("right_min", right_min_value)
     # print("right_max", right_max_value)
-
-    if left_max_value == 0 and left_min_value == 0 and middle_value == 0 and right_min_value == 0 and right_max_value == 1:
-        config.line_error = -3
+    if left_max_value == 0 and left_min_value == 1 and middle_value == 1 and right_min_value == 1 and right_max_value == 1:
+        config.line_error = -5
+        if debug:
+            print("troppo sin")
+    elif left_max_value == 0 and left_min_value == 0 and middle_value == 0 and right_min_value == 0 and right_max_value == 1:
+        config.line_error = -4
         if debug:
             print("troppo sin")
     elif left_max_value == 0 and left_min_value == 0 and middle_value == 0 and right_min_value == 1 and right_max_value == 1:
-        config.line_error = -2
+        config.line_error = -3
         if debug:
             print("unpopiu sin")
     elif left_max_value == 0 and left_min_value == 0 and middle_value == 1 and right_min_value == 1 and right_max_value == 1:
+        config.line_error = -2
+        if debug:
+            print("unpo sin")
+    elif left_max_value == 0 and left_min_value == 0 and middle_value == 1 and right_min_value == 1 and right_max_value == 0:
         config.line_error = -1
         if debug:
             print("unpo sin")
@@ -30,19 +37,26 @@ def follow_line(debug):
         config.line_error = 0
         if debug:
             print("mid")
-    elif left_max_value == 1 and left_min_value == 1 and middle_value == 1 and right_min_value == 0 and right_max_value == 0:
+    elif left_max_value == 0 and left_min_value == 1 and middle_value == 1 and right_min_value == 0 and right_max_value == 0:
         config.line_error = 1
         if debug:
             print("unpo dx")
-    elif left_max_value == 1 and left_min_value == 1 and middle_value == 0 and right_min_value == 0 and right_max_value == 0:
+    elif left_max_value == 1 and left_min_value == 1 and middle_value == 1 and right_min_value == 0 and right_max_value == 0:
         config.line_error = 2
+        if debug:
+            print("unpo dx")
+    elif left_max_value == 1 and left_min_value == 1 and middle_value == 0 and right_min_value == 0 and right_max_value == 0:
+        config.line_error = 3
         if debug:
             print("unpopiu dx")
     elif left_max_value == 1 and left_min_value == 0 and middle_value == 0 and right_min_value == 0 and right_max_value == 0:
-        config.line_error = 3
+        config.line_error = 4
         if debug:
             print("troppo sx")
-
+    elif left_max_value == 1 and left_min_value == 1 and middle_value == 1 and right_min_value == 1 and right_max_value == 0:
+        config.line_error = 5
+        if debug:
+            print("troppo sx")
 
     P = config.line_error
     # config.line_integrative = config.line_integrative + config.line_error
