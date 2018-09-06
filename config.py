@@ -38,6 +38,9 @@ def init():
     global SimpleMazeLeftDone
     SimpleMazeLeftDone = False
 
+    global SimpleMazeRightDone
+    SimpleMazeRightDoneDone = False
+
     global SimpleMazeError
     SimpleMazeError = 0
 
@@ -79,8 +82,8 @@ def init():
     global StepsEndedFirstTime
     StepsEndedFirstTime = True
 
-    global EndSTeps
-    EndSTeps = False
+    global EndSteps
+    EndSteps = False
 
     global StepCount
     StepCount = 10
@@ -215,7 +218,7 @@ StepsFinalRightSpeed = 50
 # line_kp = 25
 # line_kd = 15
 line_kp = 11
-line_kd = 4
+line_kd = 3
 # line_ki = 0
 
 line_left_speed = 45#60
@@ -264,9 +267,8 @@ min_right_speed = 35
 # dist_right_speed = 75
 
 
-obstacle_list = ["labyrinth-simple", "labyrinth-complex", "ninepins", "trapeze", "chessboard", "wreckage",
-                 "stairs", "drone"]
-obstacle_start = [("35d68628"), (""), ("c529fb35"), ("b397fa35"), ("b715665"), ("e7f6f735"), ("b397fa35"), ("c7c7d65")]
+obstacle_list = ["labyrinth-simple", "labyrinth-complex", "ninepins", "trapeze", "chessboard", "wreckage","stairs", "drone"]
+obstacle_start = [("35d68628"), (""), ("c529fb35"), ("5e3dfa35"), ("b715665"), ("e7f6f735"), ("b397fa35"), ("c7c7d65")]
 obstacle_end_left = ["84fa4412", "bbc426d3", "95a78628", "25afc928", 21, 22, 23, 24, 31, 32, 33, 34, 41, 42, 43, 44, 51, 52, 53, 54]
 obstacle_end_right = ["8565884", "55e3834", "e5ed884", 64, 71, 72, 73, 74, 81, 82, 83, 84]
 

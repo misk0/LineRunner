@@ -94,8 +94,8 @@ signal.signal(signal.SIGINT, end_program.end_read)
 
 GPIO.output(config.calib, GPIO.LOW)
 
-config.walk_speed_left = 0
-config.walk_speed_right = 0
+config.walk_speed_left = 40
+config.walk_speed_right = 40
 config.drive_left.start(config.walk_speed_left)
 config.drive_right.start(config.walk_speed_right)
 
@@ -114,10 +114,12 @@ while True:
     # elif config.LastRFID == "labyrinth-complex":
     #     ComplexMaze.ComplexMaze()
     elif config.LastRFID == "drone":
-        config.drive_left.ChangeDutyCycle(100)
-        config.drive_right.ChangeDutyCycle(60)
-        time.sleep(2)
-        config.LastRFID = ""
+        config.drive_left.ChangeDutyCycle(0)
+        config.drive_right.ChangeDutyCycle(0)
+        config.drive_left.stop()
+        config.drive_right.stop()
+        GPIO.cleanup()
+
     #     Drone.Drone()
     elif config.LastRFID == "chessboard":
         config.drive_left.ChangeDutyCycle(0)
@@ -125,11 +127,14 @@ while True:
         GPIO.output(config.en_shoot, GPIO.HIGH)
         time.sleep(1)
         GPIO.output(config.en_shoot, GPIO.LOW)
-        config.drive_left.ChangeDutyCycle(100)
-        config.drive_right.ChangeDutyCycle(60)
+        config.drive_left.ChangeDutyCycle(80)
+        config.drive_right.ChangeDutyCycle(0)
+        time.sleep(0.4)
+        config.drive_left.ChangeDutyCycle(60)
+        config.drive_right.ChangeDutyCycle(40)
         time.sleep(1)
-        config.drive_left.ChangeDutyCycle(65)
-        config.drive_right.ChangeDutyCycle(82)
+        config.walk_speed_left = 60
+        config.walk_speed_right = 40
         config.LastRFID = ""
     #     Basket.Basket()
     #     # config.AlreadyDone = True
@@ -179,6 +184,7 @@ while True:
                     config.line_follow_rmax):
                 config.LastRFID = ""
         if config.RampFirstTime == False:
+            config.servo_pwm = GPIO.PWM(config.servo, 50)
             config.servo_pwm.start(11)  # 2min 11max
             time.sleep(1)
             config.servo_pwm.stop()
@@ -186,17 +192,18 @@ while True:
             config.RampFirstTime = True
         # print("time",time.time() - RampTime1)
         if time.time() - RampTime1 <= 0.5:
-            config.drive_left.ChangeDutyCycle(60)
-            config.drive_right.ChangeDutyCycle(80)
+            config.drive_left.ChangeDutyCycle(50)
+            config.drive_right.ChangeDutyCycle(75)
         elif time.time() - RampTime1 <= 2.5:
             Ramp.Ramp(False)
             config.drive_left.ChangeDutyCycle(config.walk_speed_left)
             config.drive_right.ChangeDutyCycle(config.walk_speed_right)
         elif time.time() - RampTime1 > 2.5 and time.time() - RampTime1 <= 4:
-            config.drive_left.ChangeDutyCycle(60)
-            config.drive_right.ChangeDutyCycle(80)
+            config.drive_left.ChangeDutyCycle(50)
+            config.drive_right.ChangeDutyCycle(75)
         else:
             if config.RampEndedFirstTime == True:
+                config.servo_pwm = GPIO.PWM(config.servo, 50)
                 config.servo_pwm.start(2)  # 2min 11max
                 time.sleep(1)
                 config.servo_pwm.stop()
@@ -213,6 +220,7 @@ while True:
                     config.line_follow_rmax):
                 config.LastRFID = ""
         if config.RubbleFirstTime == False:
+            config.servo_pwm = GPIO.PWM(config.servo, 50)
             config.servo_pwm.start(11)  # 2min 11max
             time.sleep(1)
             config.servo_pwm.stop()
@@ -220,10 +228,11 @@ while True:
             config.RubbleFirstTime = True
 
         if time.time() - RubbleTime1 <= 3:
-            config.drive_left.ChangeDutyCycle(60)
-            config.drive_right.ChangeDutyCycle(80)
+            config.drive_left.ChangeDutyCycle(50)
+            config.drive_right.ChangeDutyCycle(75)
         else:
             if config.RubbleEndedFirstTime == True:
+                config.servo_pwm = GPIO.PWM(config.servo, 50)
                 config.servo_pwm.start(2)  # 2min 11max
                 time.sleep(1)
                 config.servo_pwm.stop()
@@ -240,6 +249,7 @@ while True:
                     config.line_follow_rmax):
                 config.LastRFID = ""
         if config.StepsFirstTime == False:
+            config.servo_pwm = GPIO.PWM(config.servo, 50)
             config.servo_pwm.start(11)  # 2min 11max
             time.sleep(1)
             config.servo_pwm.stop()
@@ -251,10 +261,11 @@ while True:
             config.drive_left.ChangeDutyCycle(config.walk_speed_left)
             config.drive_right.ChangeDutyCycle(config.walk_speed_right)
         elif time.time() - StepsTime1 > 2.5 and time.time() - StepsTime1 <= 6.5:
-            config.drive_left.ChangeDutyCycle(60)
-            config.drive_right.ChangeDutyCycle(80)
+            config.drive_left.ChangeDutyCycle(55)
+            config.drive_right.ChangeDutyCycle(75)
         else:
             if config.StepsEndedFirstTime == True:
+                config.servo_pwm = GPIO.PWM(config.servo, 50)
                 config.servo_pwm.start(2)  # 2min 11max
                 time.sleep(1)
                 config.servo_pwm.stop()
@@ -282,15 +293,15 @@ while True:
     # Rubble.Rubble()
 
     # FollowMeBaby.FollowMe()
-    #     config.drive_left.ChangeDutyCycle(config.walk_speed_left)
-    #     config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+        config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+        config.drive_right.ChangeDutyCycle(config.walk_speed_right)
         # print(config.walk_speed_left)
-        time.sleep(0.07)#time.sleep(0.1)
+        time.sleep(0.06)#time.sleep(0.1)
         config.drive_left.ChangeDutyCycle(0)
         config.drive_right.ChangeDutyCycle(0)
         # time.sleep(0.1)
-        # config.drive_left.ChangeDutyCycle(config.walk_speed_left)
-        # config.drive_right.ChangeDutyCycle(config.walk_speed_right)
+        config.drive_left.ChangeDutyCycle(config.walk_speed_left)
+        config.drive_right.ChangeDutyCycle(config.walk_speed_right)
 
 
 

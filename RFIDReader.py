@@ -23,7 +23,7 @@ class RFIDReader:
             if match in quad:
                 # if config.AlreadyDone == False:
                 config.LastRFID = config.obstacle_list[config.obstacle_start.index(quad)]
-
+                #print(config.LastRFID)
         # if match in config.obstacle_end_left:
         #     print("Found obstacle end left")
         #     config.LastRFID = "obstacle_end_left"
@@ -43,7 +43,7 @@ class RFIDReader:
 
                 (error, uid) = self.rdr.anticoll()
                 if not error:
-                    print(uid)
+                    #print(uid)
                     self.identify_obstacle(uid)
                     #time.sleep(0.2)
         finally:
